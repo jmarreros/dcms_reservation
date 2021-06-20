@@ -1,0 +1,16 @@
+{
+    "name": "webservi/dcms-send-pin",
+    "description": "Send PIN and Identify by Email",
+    "authors": [
+        {
+            "name": "Jhon Marreros Guzman",
+            "email": "admin@decodecms.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"dcms\\pin\\": "./"}
+    },
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.17"
+    }
+}
