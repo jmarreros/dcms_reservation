@@ -19,7 +19,7 @@ class Submenu{
             __('Configuracion Reservas','dcms-reservation'),
             'manage_options',
             'reservation-settings',
-            [$this, 'submenu_page_callback']
+            [$this, 'submenu_configuration_callback']
         );
 
         add_submenu_page(
@@ -28,7 +28,7 @@ class Submenu{
             __('Alta abonados','dcms-reservation'),
             'manage_options',
             'new-users',
-            [$this, 'submenu_page_callback']
+            [$this, 'submenu_new_users_callback']
         );
 
         add_submenu_page(
@@ -37,13 +37,22 @@ class Submenu{
             __('Cambio asientos','dcms-reservation'),
             'manage_options',
             'seat-change',
-            [$this, 'submenu_page_callback']
+            [$this, 'submenu_seats_callback']
         );
     }
 
     // Callback, show view
-    public function submenu_page_callback(){
-        // include_once (DCMS_RESERVATION_PATH. '/views/settings-main.php');
-        echo "hola";
+    public function submenu_configuration_callback(){
+        wp_enqueue_style('admin-reservation-style');
+        wp_enqueue_script('admin-reservation-script');
+        include_once (DCMS_RESERVATION_PATH. '/backend/views/settings-main.php');
+    }
+
+    public function submenu_new_users_callback(){
+        echo "nuevos usuarios";
+    }
+
+    public function submenu_seats_callback(){
+        echo "Cambio de asientos";
     }
 }

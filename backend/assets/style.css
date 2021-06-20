@@ -1,0 +1,26 @@
+body {
+  /* background-color: grey; */
+}
+
+.container-calendar {
+  margin-top: 1.2rem;
+  max-width: 800px;
+}
+
+.container-calendar table {
+  width: 100%;
+  margin-top: 1.2rem;
+}
+
+.container-calendar input[type="number"] {
+  width: 100%;
+}
+
+.container-calendar tr td {
+  padding: 6px 4px;
+}
+
+.fotter-calendar {
+  margin-top: 1.2rem;
+  text-align: right;
+}

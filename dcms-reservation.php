@@ -17,8 +17,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 // use dcms\reservation\includes\Plugin;
 use dcms\reservation\includes\Submenu;
-// use dcms\reservation\includes\Settings;
-// use dcms\reservation\includes\Enqueue;
+use dcms\reservation\includes\Enqueue;
 // use dcms\reservation\includes\Shortcode;
 // use dcms\reservation\includes\Process;
 // use dcms\reservation\includes\Export;
@@ -68,9 +67,8 @@ final class Loader{
 		$this->load_domain();
 		$this->add_link_plugin();
 		// new Plugin();
-		// new Settings();
 		new SubMenu();
-		// new Enqueue();
+		new Enqueue();
 		// new Shortcode();
 		// new Process();
 		// new Export();
