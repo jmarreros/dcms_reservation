@@ -33,6 +33,8 @@ $hours = ['8-9', '9-10', '10-11', '11-12', '12-13', '15-16', '16-17', '17-18'];
     </table>
 
     <footer class="fotter-calendar">
-        <a class="btn-add button button-primary">Grabar</a>
+        <button type="button" id="save_res_config" class="btn-add button button-primary">Grabar
+            <div class="lds-ring" style="display:none" ><div></div><div></div><div></div><div></div></div>
+        </button>
     </footer>
 </section>

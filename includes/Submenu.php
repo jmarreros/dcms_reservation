@@ -45,6 +45,8 @@ class Submenu{
     public function submenu_configuration_callback(){
         wp_enqueue_style('admin-reservation-style');
         wp_enqueue_script('admin-reservation-script');
+        wp_localize_script('admin-reservation-script','dcms_res_config',['ajaxurl'=>admin_url('admin-ajax.php')]);
+
         include_once (DCMS_RESERVATION_PATH. '/backend/views/settings-main.php');
     }
 

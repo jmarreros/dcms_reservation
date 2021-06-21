@@ -19,7 +19,7 @@ class Database{
                     `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
                     `day` varchar(50) DEFAULT NULL,
                     `range` varchar(50) DEFAULT NULL,
-                    `type` varchar(50) DEFAULT NULL,,
+                    `type` varchar(50) DEFAULT NULL,
                     PRIMARY KEY (`id`)
             )";
 
