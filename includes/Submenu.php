@@ -2,6 +2,8 @@
 
 namespace dcms\reservation\includes;
 
+use dcms\reservation\includes\Database;
+
 /**
  * Class for creating a dashboard submenu
  */
@@ -47,6 +49,7 @@ class Submenu{
         wp_enqueue_script('admin-reservation-script');
         wp_localize_script('admin-reservation-script','dcms_res_config',['ajaxurl'=>admin_url('admin-ajax.php')]);
 
+        $db = new Database();
         include_once (DCMS_RESERVATION_PATH. '/backend/views/settings-main.php');
     }
 

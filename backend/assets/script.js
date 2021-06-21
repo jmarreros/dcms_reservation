@@ -7,6 +7,17 @@
     $(btnSave).click(function(e){
         e.preventDefault();
 
+        const calendar = [];
+        let i = -1;
+        $('#tbl-calendar input').each(function(){
+            const day = $(this).data('day');
+            const hour = $(this).data('hour');
+            const qty = $(this).val();
+
+            calendar[++i] = day + '|' + hour + '|' + qty;
+        });
+
+        const type = $('.nav-tab.nav-tab-active').data('tab');
 
         $.ajax({
             url : dcms_res_config.ajaxurl,
@@ -14,7 +25,8 @@
             data: {
                 action:'dcms_save_config',
                 nonce:'',
-                enviar: 'ok'
+                calendar,
+                type
             },
             beforeSend: function(){
                 $(spinner).show();

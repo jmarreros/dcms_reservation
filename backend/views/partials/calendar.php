@@ -1,4 +1,7 @@
 <?php
+// $data
+// $current_tab
+// $plugin_tabs
 
 $days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 $hours = ['8-9', '9-10', '10-11', '11-12', '12-13', '15-16', '16-17', '17-18'];
@@ -9,7 +12,7 @@ $hours = ['8-9', '9-10', '10-11', '11-12', '12-13', '15-16', '16-17', '17-18'];
     <header>
         <p>Llena los cupos por día y por horario para el <?= $plugin_tabs[$current_tab] ?></p>
     </header>
-    <table class="tbl-calendar" cellspacing="0" cellpadding="0">
+    <table id="tbl-calendar" class="tbl-calendar" cellspacing="0" cellpadding="0">
     <thead>
         <tr>
             <th></th>
@@ -25,7 +28,17 @@ $hours = ['8-9', '9-10', '10-11', '11-12', '12-13', '15-16', '16-17', '17-18'];
         <tr>
             <td><?= $hours[$i] ?></td>
             <?php for ($j=0; $j < count($days) ; $j++): ?>
-                    <td><input type='number' min="0" max="1000" /></td>
+                    <td>
+                        <?php $id = md5($days[$j].$hours[$i].$current_tab) ?>
+                        <input
+                            data-day="<?= $days[$j] ?>"
+                            data-hour="<?= $hours[$i] ?>"
+                            type='number'
+                            min="0"
+                            max="1000"
+                            value=<?= $data[$id]->qty??0 ?>
+                        />
+                    </td>
             <?php endfor; ?>
         </tr>
         <?php endfor ?>

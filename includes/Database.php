@@ -13,12 +13,29 @@ class Database{
         $this->table_name   = $this->wpdb->prefix.'dcms_reservation_config';
     }
 
+    // Get all data
+    public function get_calendar_config($type){
+        $sql= "SELECT id, qty FROM {$this->table_name} WHERE `type`='{$type}';";
+
+        return $this->wpdb->get_results( $sql , OBJECT_K);
+    }
+
+    // Save calendar config, insert or update
+    public function save_config_calendar($id, $day, $hour, $qty, $type){
+        $sql = "INSERT INTO {$this->table_name} (`id`, `day`, `range`, `qty`, `type`)
+                VALUES('{$id}', '{$day}', '{$hour}', $qty, '$type')
+            ON DUPLICATE KEY UPDATE qty = $qty";
+
+        return $this->wpdb->query($sql);
+    }
+
     // Init activation create table
     public function create_table(){
         $sql = " CREATE TABLE IF NOT EXISTS {$this->table_name} (
-                    `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                    `id` varchar(100),
                     `day` varchar(50) DEFAULT NULL,
                     `range` varchar(50) DEFAULT NULL,
+                    `qty` smallint unsigned DEFAULT 0,
                     `type` varchar(50) DEFAULT NULL,
                     PRIMARY KEY (`id`)
             )";
