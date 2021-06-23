@@ -1,3 +1,31 @@
+/*Calendar*/
+.cal-container {
+}
+
+.cal-sel-date {
+  width: 100%;
+  min-height: 200px;
+  background: grey;
+  z-index: 1000;
+  display: none;
+}
+
+.cal-calendar {
+  background-color: white;
+}
+
+.cal-calendar.sel-date .tavo-calendar__week-names {
+  display: none;
+}
+
+.cal-calendar.sel-date .tavo-calendar__day {
+  min-width: 0;
+}
+
+.cal-calendar.sel-date + .cal-sel-date {
+  display: block;
+}
+
 /*Spinner*/
 .lds-ring {
   display: inline-block;

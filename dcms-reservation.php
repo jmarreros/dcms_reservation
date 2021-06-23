@@ -20,7 +20,7 @@ use dcms\reservation\includes\Submenu;
 use dcms\reservation\includes\Enqueue;
 use dcms\reservation\includes\Database;
 use dcms\reservation\includes\Process;
-// use dcms\reservation\includes\Shortcode;
+use dcms\reservation\includes\Shortcode;
 // use dcms\reservation\includes\Export;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -46,8 +46,8 @@ final class Loader{
 		define ('DCMS_RANGE_CHANGE_SEAT_START', 'dcms_start_new-users');
 		define ('DCMS_RANGE_CHANGE_SEAT_END', 'dcms_end_new-users');
 
-		// define ('DCMS_SHORTCODE_FORM_RESERVATION', 'sporting-form-reservation');
-		// define ('DCMS_SHORTCODE_FORM_LOGIN', 'sporting-form-login');
+		// Shortcode
+		define ('DCMS_SHORTCODE_NEW_USER', 'dcms_alta_abonados');
 	}
 
 	// Load tex domain
@@ -78,6 +78,7 @@ final class Loader{
 		new Enqueue();
 		new Database();
 		new Process();
+		new Shortcode();
 		// new Export();
 	}
 
