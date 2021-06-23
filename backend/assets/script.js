@@ -3,6 +3,7 @@
 
     const spinner = '.lds-ring';
     const btnSave = '#save_res_config';
+    const message = $('.cmessage');
 
     $(btnSave).click(function(e){
         e.preventDefault();
@@ -17,7 +18,12 @@
             calendar[++i] = day + '|' + hour + '|' + qty;
         });
 
+        // Type
         const type = $('.nav-tab.nav-tab-active').data('tab');
+
+        // range date
+        const range_start = $('#date_start').val();
+        const range_end = $('#date_end').val();
 
         $.ajax({
             url : dcms_res_config.ajaxurl,
@@ -26,19 +32,19 @@
                 action:'dcms_save_config',
                 nonce:'',
                 calendar,
+                range_start,
+                range_end,
                 type
             },
             beforeSend: function(){
                 $(spinner).show();
                 $(btnSave).prop('disabled', true);
-                // $(smessage).hide();
-                // $('#save_res_config').prop('disabled',true);
+                $(message).hide();
             }
         })
         .done( function(res) {
             res = JSON.parse(res);
-            console.log(res);
-            // show_message(res, container);
+            show_message(res, message);
         })
         .always( function() {
             $(spinner).hide();
@@ -47,8 +53,6 @@
 
 
     });
-
-
 
     // Aux function to show message
     function show_message(res, container){
@@ -59,5 +63,6 @@
         }
         $(container).show().html(res.message);
     }
+
 
 })( jQuery );

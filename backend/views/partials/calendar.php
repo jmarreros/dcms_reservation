@@ -4,13 +4,25 @@
 // $plugin_tabs
 
 $days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
-$hours = ['8-9', '9-10', '10-11', '11-12', '12-13', '15-16', '16-17', '17-18'];
+$hours = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30'];
 
 ?>
 
 <section class="container-calendar">
     <header>
+
+        <section class="date-range <?= $current_tab ?>">
+            <?php
+                $val_start  = get_option('dcms_start_'.$current_tab);
+                $val_end    = get_option('dcms_end_'.$current_tab);
+            ?>
+
+            Desde: <input type="date" id="date_start"  value="<?= $val_start ?>" />
+            Hasta: <input type="date" id="date_end" value="<?= $val_end ?>" />
+        </section>
+
         <p>Llena los cupos por día y por horario para el <?= $plugin_tabs[$current_tab] ?></p>
+
     </header>
     <table id="tbl-calendar" class="tbl-calendar" cellspacing="0" cellpadding="0">
     <thead>
@@ -36,7 +48,7 @@ $hours = ['8-9', '9-10', '10-11', '11-12', '12-13', '15-16', '16-17', '17-18'];
                             type='number'
                             min="0"
                             max="1000"
-                            value=<?= $data[$id]->qty??0 ?>
+                            value=<?= $data[$id]->qty>0?$data[$id]->qty:'' ?>
                         />
                     </td>
             <?php endfor; ?>
@@ -50,4 +62,8 @@ $hours = ['8-9', '9-10', '10-11', '11-12', '12-13', '15-16', '16-17', '17-18'];
             <div class="lds-ring" style="display:none" ><div></div><div></div><div></div><div></div></div>
         </button>
     </footer>
+
+    <section class="cmessage">
+    </section>
+
 </section>

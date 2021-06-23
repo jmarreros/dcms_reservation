@@ -13,28 +13,42 @@ class Process{
 
     public function process_save_config(){
 
-        $calendar = $_POST['calendar']??null;
-        $type = $_POST['type']??'';
+        $calendar       = $_POST['calendar']??null;
+        $type           = $_POST['type']??'';
+        $range_start    = $_POST['range_start']??'';
+        $range_end      = $_POST['range_end']??'';
 
-        $db = new Database();
+        try {
+            // Save option mathematics
+            update_option('dcms_start_'.$type, $range_start);
+            update_option('dcms_end_'.$type, $range_end);
 
-        if ( $calendar ){
-            foreach ($calendar as $str) {
-                $item = explode('|', $str);
+            $db = new Database();
 
-                $day = $item[0];
-                $hour = $item[1];
-                $qty = $item[2]?$item[2]:0;
-                $id = md5($day.$hour.$type);
+            if ( $calendar ){
+                foreach ($calendar as $str) {
+                    $item = explode('|', $str);
 
-                $db->save_config_calendar($id, $day, $hour, $qty, $type);
+                    $day = $item[0];
+                    $hour = $item[1];
+                    $qty = $item[2]?$item[2]:0;
+                    $id = md5($day.$hour.$type);
+
+                    $db->save_config_calendar($id, $day, $hour, $qty, $type);
+                }
             }
-        }
 
-        $res = [
-            'status' => 0,
-            'message' => "Mensaje recibido",
-        ];
+            $res = [
+                'status' => 1,
+                'message' => "Se grabó correctamente",
+            ];
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
+            $res = [
+                'status' => 0,
+                'message' => "Hubo un error - ".$e->getMessage(),
+            ];
+        }
 
         echo json_encode($res);
         wp_die();

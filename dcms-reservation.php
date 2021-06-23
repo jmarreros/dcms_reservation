@@ -40,6 +40,12 @@ final class Loader{
 		define ('DCMS_RESERVATION_BASE_NAME', plugin_basename( __FILE__ ));
 		define ('DCMS_RESERVATION_SUBMENU', 'edit.php?post_type=events_sporting');
 
+		// Ranges
+		define ('DCMS_RANGE_NEW_USERS_START', 'dcms_start_change-seats');
+		define ('DCMS_RANGE_NEW_USERS_END', 'dcms_end_change-seats');
+		define ('DCMS_RANGE_CHANGE_SEAT_START', 'dcms_start_new-users');
+		define ('DCMS_RANGE_CHANGE_SEAT_END', 'dcms_end_new-users');
+
 		// define ('DCMS_SHORTCODE_FORM_RESERVATION', 'sporting-form-reservation');
 		// define ('DCMS_SHORTCODE_FORM_LOGIN', 'sporting-form-login');
 	}
