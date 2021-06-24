@@ -2,6 +2,7 @@
 
 namespace dcms\reservation\includes;
 
+use dcms\reservation\includes\Database;
 
 // Class for grouping shortcodes functionality
 class Shortcode{
@@ -25,6 +26,18 @@ class Shortcode{
         wp_enqueue_style('calendar-style');
         wp_enqueue_style('reservation-style');
 
+        $db = new Database();
+        $available_days = $db->get_available_days('new-users');
+        $start_date = get_option(DCMS_RANGE_CHANGE_SEAT_START);
+        $end_date = get_option(DCMS_RANGE_CHANGE_SEAT_END);
+
+        wp_localize_script('reservation-script',
+                            'dcms_new_user',
+                            [ 'ajaxurl'=>admin_url('admin-ajax.php'),
+                              'available_days' => $available_days,
+                              'start_date' => $start_date,
+                              'end_date' => $end_date,
+                              'nonce' => wp_create_nonce('ajax-nonce-new-user')]);
 
         ob_start();
             include_once DCMS_RESERVATION_PATH.'views/form-new-users.php';

@@ -1,3 +1,5 @@
+
+// Config calendar
 const calendar_el = document.querySelector('#cal-new-user');
 const calendar_user = new TavoCalendar(calendar_el, {
     range_select: false,
@@ -10,11 +12,26 @@ const calendar_user = new TavoCalendar(calendar_el, {
     highlight: ['2021-06-28'],
 });
 
-calendar_user.addSelected('2021-06-26');
-calendar_user.addSelected('2021-06-25');
-calendar_user.addSelected('2021-06-20');
-calendar_user.addSelected('2021-06-30');
-calendar_user.addSelected('2021-07-20');
+
+
+// Fill initial data
+const available_days = dcms_new_user.available_days;
+const start_date = dcms_new_user.start_date;
+const end_date = dcms_new_user.end_date;
+
+console.log(available_days);
+console.log(start_date);
+console.log(end_date);
+
+// calendar_user.addSelected('2021-06-26');
+// calendar_user.addSelected('2021-06-25');
+// calendar_user.addSelected('2021-06-20');
+// calendar_user.addSelected('2021-06-30');
+// calendar_user.addSelected('2021-07-20');
+
+// const fecha = '2021-06-26';
+// const x = moment(fecha).locale('es').format('dddd');
+// console.log(x);
 
 
 (function( $ ) {

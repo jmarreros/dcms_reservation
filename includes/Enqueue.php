@@ -14,7 +14,7 @@ class Enqueue{
     public function register_scripts(){
         wp_register_script('reservation-script',
                 DCMS_RESERVATION_URL.'/assets/script.js',
-                ['jquery'],
+                ['jquery', 'calendar-script'],
                 DCMS_RESERVATION_VERSION,
                 true);
 
@@ -47,7 +47,7 @@ class Enqueue{
 
         wp_register_script('admin-reservation-script',
                             DCMS_RESERVATION_URL.'/backend/assets/script.js',
-                            ['jquery', 'calendar-script'],
+                            ['jquery'],
                             DCMS_RESERVATION_VERSION,
                             true);
 

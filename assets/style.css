@@ -27,12 +27,20 @@
 
 .tavo-calendar__day-inner.current,
 .tavo-calendar__day-inner.current:hover {
-  background-color: green;
-  color: white;
+  background-color: #e20026;
 }
 
 .tavo-calendar__day_abs-today {
   background-color: transparent;
+}
+
+.tavo-calendar__day span:hover {
+  background-color: transparent;
+}
+.tavo-calendar__day_select span:hover,
+.tavo-calendar__day_select span {
+  background-color: green;
+  color: white;
 }
 
 .tavo-calendar__day_abs-today .tavo-calendar__day-inner {
@@ -41,6 +49,10 @@
 
 .tavo-calendar__day-inner {
   border-radius: 12px !important;
+}
+
+.tavo-calendar__day_highlight {
+  color: #aaa !important;
 }
 
 /*Spinner*/
