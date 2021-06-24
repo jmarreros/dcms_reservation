@@ -1,13 +1,12 @@
 /*Calendar*/
 .cal-container {
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
 .cal-sel-date {
   width: 100%;
-  min-height: 200px;
-  background: grey;
-  z-index: 1000;
-  display: none;
+  background: lightcyan;
 }
 
 .cal-calendar {
@@ -24,6 +23,24 @@
 
 .cal-calendar.sel-date + .cal-sel-date {
   display: block;
+}
+
+.tavo-calendar__day-inner.current,
+.tavo-calendar__day-inner.current:hover {
+  background-color: green;
+  color: white;
+}
+
+.tavo-calendar__day_abs-today {
+  background-color: transparent;
+}
+
+.tavo-calendar__day_abs-today .tavo-calendar__day-inner {
+  border: 1px solid grey;
+}
+
+.tavo-calendar__day-inner {
+  border-radius: 12px !important;
 }
 
 /*Spinner*/

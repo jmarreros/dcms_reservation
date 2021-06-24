@@ -1,5 +1,5 @@
 const calendar_el = document.querySelector('#cal-new-user');
-const calendar_user = new TavoCalendar('#cal-new-user', {
+const calendar_user = new TavoCalendar(calendar_el, {
     range_select: false,
     selected: [],
     locale: 'es',
@@ -12,20 +12,50 @@ const calendar_user = new TavoCalendar('#cal-new-user', {
 
 calendar_user.addSelected('2021-06-26');
 calendar_user.addSelected('2021-06-25');
+calendar_user.addSelected('2021-06-20');
+calendar_user.addSelected('2021-06-30');
+calendar_user.addSelected('2021-07-20');
 
 
 (function( $ ) {
     'use strict';
 
-    $('#cal-new-user').click(function(e){
+    $(calendar_el).click(function(e){
 
-        if ( $(e.target).parent().attr('class') && $(e.target).parent().attr('class').includes('tavo-calendar__day_select') ){
+        if ( $(e.target).parent().attr('class') &&
+             $(e.target).parent().hasClass('tavo-calendar__day_abs-future') &&
+             $(e.target).parent().hasClass('tavo-calendar__day_select') ){
+
             const day   = $(e.target).text();
-            const arr   = $('#cal-new-user .tavo-calendar__month-label').text().split(', ');
+            const arr   = $(calendar_el).find('.tavo-calendar__month-label').text().split(', ');
             const month = moment().month(arr[0]).locale('es').format("MM");
             const year  = arr[1];
 
             console.log(day,month,year);
+
+            let position = -1;
+            let current = 0;
+
+            // Current class
+            $(calendar_el).find('.current').removeClass('current');
+            $(e.target).addClass('current');
+
+            $('.tavo-calendar__days .cal-sel-date').remove();
+
+            // recorremos el array para saber la posicion e insertar el detalle de Horas
+            $(calendar_el).find('.tavo-calendar__day').each(function(index, item){
+                current = index + 1;
+                if ( $(item).find('.tavo-calendar__day-inner').text() == day ){
+                    position = current;
+                }
+                if ( position > 0 ){
+                    if ( current % 7 == 0){
+                        $('.cal-container > .cal-sel-date').clone().insertAfter($(item));
+                        return false;
+                    }
+                }
+            })
+
         }
 
     });
