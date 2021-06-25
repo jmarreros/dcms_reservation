@@ -43,6 +43,11 @@
   color: white;
 }
 
+.tavo-calendar__day_select.tavo-calendar__day_rel-past span,
+.tavo-calendar__day_select.tavo-calendar__day_rel-past span:hover {
+  background-color: grey;
+}
+
 .tavo-calendar__day_abs-today .tavo-calendar__day-inner {
   border: 1px solid grey;
 }
@@ -53,6 +58,14 @@
 
 .tavo-calendar__day_highlight {
   color: #aaa !important;
+}
+
+.tavo-calendar__day {
+  cursor: auto;
+}
+
+.tavo-calendar__day .tavo-calendar__day-inner {
+  cursor: pointer;
 }
 
 /*Spinner*/

@@ -9,46 +9,43 @@ const calendar_user = new TavoCalendar(calendar_el, {
     future_select: true,
     past_select: false,
     frozen: true,
-    highlight: ['2021-06-28'],
 });
-
-
 
 // Fill initial data
 const available_days = dcms_new_user.available_days;
 const start_date = dcms_new_user.start_date;
 const end_date = dcms_new_user.end_date;
 
-console.log(available_days);
-console.log(start_date);
-console.log(end_date);
+// Marcamos los dias disponibles
+let is_after = false;
+let current = start_date;
+while ( ! is_after ){
 
-// calendar_user.addSelected('2021-06-26');
-// calendar_user.addSelected('2021-06-25');
-// calendar_user.addSelected('2021-06-20');
-// calendar_user.addSelected('2021-06-30');
-// calendar_user.addSelected('2021-07-20');
+    const day_name = moment(current).locale('es').format('dddd');
 
-// const fecha = '2021-06-26';
-// const x = moment(fecha).locale('es').format('dddd');
-// console.log(x);
+    if ( available_days.find( day => day.toLowerCase() === day_name.toLowerCase() ) ){
+        calendar_user.addSelected(current);
+    }
+
+    is_after = moment(current).add(1,'days').isAfter(end_date);
+    current = moment(current).add(1,'days').format('YYYY-MM-DD');
+}
 
 
+// Manejamos los eventos con jquery
 (function( $ ) {
     'use strict';
 
     $(calendar_el).click(function(e){
 
         if ( $(e.target).parent().attr('class') &&
-             $(e.target).parent().hasClass('tavo-calendar__day_abs-future') &&
+             ( $(e.target).parent().hasClass('tavo-calendar__day_abs-future') || $(e.target).parent().hasClass('tavo-calendar__day_rel-today') ) &&
              $(e.target).parent().hasClass('tavo-calendar__day_select') ){
 
             const day   = $(e.target).text();
             const arr   = $(calendar_el).find('.tavo-calendar__month-label').text().split(', ');
             const month = moment().month(arr[0]).locale('es').format("MM");
             const year  = arr[1];
-
-            console.log(day,month,year);
 
             let position = -1;
             let current = 0;
@@ -75,26 +72,28 @@ console.log(end_date);
 
         }
 
-    });
+    }); // Click
+
+
 
 })( jQuery );
 
 
 
-// const parts = $('#cal-new-user .tavo-calendar__month-label').text().split(', ');
-// const smonth = parts[0];
-// const year = parts[1];
-// const day = $(this).text();
-// const month = moment().month(smonth).locale('es').format("MM");
+// Todo:
+// 1- foreach de todas las fechas desde el start_date hasta el end_date
+// 2- Comparar si la fecha esta dentro del get_available_days
+// 3- Al hacer click en una fecha, mostrar los horarios habilitados
+// 4- Para mostrar los horarios tengo que sumar los horarios existentes en esa mismo día y hora
+// 5- Sino la cantidad agrupada sobrepasa la configuracíon de hora día, entonces no se mostrará
 
-// console.log(day,month,year);
+// console.log(available_days); // lunes, martes, miercoles, jueves, viernes, sabado
+// console.log(start_date);
+// console.log(end_date);
 
-// calendar_el.addEventListener('calendar-select', (ev) => {
-//     alert(calendar_user.getSelected());
-//     // calendar_user.addSelected('2021-06-26');
-//     // calendar_user.addSelected('2021-06-25');
-
-//     calendar_el.classList.add('sel-date');
-// });
+// calendar_user.addSelected('2021-06-26');
+// const fecha = '2021-06-26';
+// const x = moment(fecha).locale('es').format('dddd');
+// console.log(x);
 
 
