@@ -6,7 +6,7 @@
 
 .cal-sel-date {
   width: 100%;
-  background: lightcyan;
+  background: #f1f1f1;
 }
 
 .cal-calendar {
@@ -27,7 +27,14 @@
 
 .tavo-calendar__day-inner.current,
 .tavo-calendar__day-inner.current:hover {
-  background-color: #e20026;
+  background-color: transparent;
+  border: none;
+  color: black;
+  font-weight: bold;
+}
+
+.tavo-calendar__day_select.current {
+  background-color: #f1f1f1;
 }
 
 .tavo-calendar__day_abs-today {
@@ -39,22 +46,22 @@
 }
 .tavo-calendar__day_select span:hover,
 .tavo-calendar__day_select span {
-  background-color: green;
-  color: white;
+  background-color: white;
+  border: 2px solid #3e3e3e;
 }
 
 .tavo-calendar__day_select.tavo-calendar__day_rel-past span,
 .tavo-calendar__day_select.tavo-calendar__day_rel-past span:hover {
-  background-color: grey;
+  border: 2px solid #ccc;
 }
 
-.tavo-calendar__day_abs-today .tavo-calendar__day-inner {
-  border: 1px solid grey;
-}
+/* .tavo-calendar__day_abs-today .tavo-calendar__day-inner {
+  border: 2px solid black;
+} */
 
-.tavo-calendar__day-inner {
+/* .tavo-calendar__day-inner {
   border-radius: 12px !important;
-}
+} */
 
 .tavo-calendar__day_highlight {
   color: #aaa !important;
@@ -62,10 +69,23 @@
 
 .tavo-calendar__day {
   cursor: auto;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
-.tavo-calendar__day .tavo-calendar__day-inner {
+.tavo-calendar__day_select .tavo-calendar__day-inner {
   cursor: pointer;
+}
+
+.tavo-calendar__day span.tavo-calendar__day-inner {
+  width: 50px;
+  height: auto;
+  font-size: 16px;
+}
+
+.tavo-calendar__month-label,
+.tavo-calendar__weekday {
+  font-size: 15px;
 }
 
 /*Spinner*/

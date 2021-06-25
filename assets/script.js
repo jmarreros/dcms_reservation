@@ -23,7 +23,7 @@ while ( ! is_after ){
 
     const day_name = moment(current).locale('es').format('dddd');
 
-    if ( available_days.find( day => day.toLowerCase() === day_name.toLowerCase() ) ){
+    if ( available_days.includes( day_name ) ){
         calendar_user.addSelected(current);
     }
 
@@ -38,6 +38,7 @@ while ( ! is_after ){
 
     $(calendar_el).click(function(e){
 
+        // Para la seleccion de días
         if ( $(e.target).parent().attr('class') &&
              ( $(e.target).parent().hasClass('tavo-calendar__day_abs-future') || $(e.target).parent().hasClass('tavo-calendar__day_rel-today') ) &&
              $(e.target).parent().hasClass('tavo-calendar__day_select') ){
@@ -50,9 +51,13 @@ while ( ! is_after ){
             let position = -1;
             let current = 0;
 
+            const select_day = year + '-' +month + '-' + day;
+            // Call select day
+            get_data_per_day(select_day);
+
             // Current class
             $(calendar_el).find('.current').removeClass('current');
-            $(e.target).addClass('current');
+            $(e.target).addClass('current').parent().addClass('current');
 
             $('.tavo-calendar__days .cal-sel-date').remove();
 
@@ -72,8 +77,77 @@ while ( ! is_after ){
 
         }
 
+        // para la selección del radio buttons
+        // if ( $(e.target).attr('type') == 'radio' ){
+        //     $(e.target).prop('checked', true);
+        //     console.log($(e.target));
+        // }
+
+        // console.log($(e.target));
+
+        console.log($(e.target).is('li'));
+
     }); // Click
 
+
+    // get days ajax
+
+    function get_data_per_day(selected_day){
+
+        const dayname = moment(selected_day).locale('es').format('dddd');
+
+        $.ajax({
+            url: dcms_new_user.ajaxurl,
+            type: 'post',
+            dataType: 'json',
+            data: {
+                action:'dcms_get_available_hours',
+                nonce: dcms_new_user.nonce,
+                type: $(calendar_el).attr('id'),
+                date: selected_day,
+                dayname
+            },
+            beforeSend: function(){
+
+            }
+        })
+        .done( function(res){
+            console.log(res);
+        })
+        .always( function(){
+
+        });
+
+        ;
+    }
+
+    // $.ajax({
+    //     url : dcms_flogin.ajaxurl,
+    //     type: 'post',
+    //     data: {
+    //         action  : 'dcms_ajax_validate_login',
+    //         nonce   : dcms_flogin.nonce,
+    //         username: $('#username').val(),
+    //         password: $('#password').val(),
+    //     },
+    //     beforeSend: function(){
+    //         $(sspin).show();
+    //         $(sbutton).val('Validando ...').prop('disabled', true);;
+    //         $(smessage).hide();
+    //     }
+    // })
+    // .done( function(res) {
+    //     res = JSON.parse(res);
+    //     show_message(res, smessage);
+
+    //     if (res.status == 1){
+    //         window.location.href = dcms_flogin.url;
+    //     }
+    // })
+    // .always( function() {
+    //     $(sspin).hide();
+    //     $(sbutton).val('Ingresar').prop('disabled', false);;
+    // });
 
 
 })( jQuery );

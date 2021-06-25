@@ -30,7 +30,7 @@
             type: 'post',
             data: {
                 action:'dcms_save_config',
-                nonce:'',
+                nonce   : dcms_res_config.nonce,
                 calendar,
                 range_start,
                 range_end,
