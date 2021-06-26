@@ -88,6 +88,22 @@
   font-size: 15px;
 }
 
+.cal-sel-date > div {
+  background-color: white;
+  width: 60%;
+  margin: auto;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 0 4px #ccc;
+  padding: 10px;
+}
+
+.cal-sel-date h4 {
+  margin: 0;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
 /*Spinner*/
 .lds-ring {
   display: inline-block;

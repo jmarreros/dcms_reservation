@@ -77,15 +77,13 @@ while ( ! is_after ){
 
         }
 
-        // para la selección del radio buttons
-        // if ( $(e.target).attr('type') == 'radio' ){
-        //     $(e.target).prop('checked', true);
-        //     console.log($(e.target));
-        // }
+        // para la selección de elementos en la lista
+        if ( $(e.target).is('li') && $(e.target).data('hour') ){
+            const sel_hour = $(e.target).data('hour');
 
-        // console.log($(e.target));
-
-        console.log($(e.target).is('li'));
+            $('.available-hours li').removeClass('selected');
+            $(e.target).addClass('selected');
+        }
 
     }); // Click
 
