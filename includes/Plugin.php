@@ -16,7 +16,7 @@ class Plugin{
     public function dcms_activation_plugin(){
         // Create table
         $db = new Database();
-        $db->create_table();
+        $db->create_table_config();
     }
 
     public function dcms_deactivation_plugin(){

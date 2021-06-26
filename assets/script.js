@@ -1,40 +1,51 @@
-
-// Config calendar
-const calendar_el = document.querySelector('#cal-new-user');
-const calendar_user = new TavoCalendar(calendar_el, {
-    range_select: false,
-    selected: [],
-    locale: 'es',
-    multi_select: false,
-    future_select: true,
-    past_select: false,
-    frozen: true,
-});
-
-// Fill initial data
-const available_days = dcms_new_user.available_days;
-const start_date = dcms_new_user.start_date;
-const end_date = dcms_new_user.end_date;
-
-// Marcamos los dias disponibles
-let is_after = false;
-let current = start_date;
-while ( ! is_after ){
-
-    const day_name = moment(current).locale('es').format('dddd');
-
-    if ( available_days.includes( day_name ) ){
-        calendar_user.addSelected(current);
-    }
-
-    is_after = moment(current).add(1,'days').isAfter(end_date);
-    current = moment(current).add(1,'days').format('YYYY-MM-DD');
-}
-
-
 // Manejamos los eventos con jquery
 (function( $ ) {
     'use strict';
+
+    let calendar_el = null; // calendar element
+    let dcms_object = null; // dcms_new_user, dcms_change_seats
+
+    // Config calendar for new users
+    if (typeof dcms_new_user != "undefined") {
+
+        dcms_object = dcms_new_user;
+        calendar_el = document.querySelector('#cal-new-user');
+        const calendar_control = new TavoCalendar(calendar_el, {
+            range_select: false,
+            selected: [],
+            locale: 'es',
+            multi_select: false,
+            future_select: true,
+            past_select: false,
+            frozen: true,
+        });
+
+        initialization( calendar_control );
+    }
+
+
+    function initialization(calendar_control){
+        // Fill initial data
+        const available_days = dcms_object.available_days;
+        const start_date = dcms_object.start_date;
+        const end_date = dcms_object.end_date;
+
+        // Marcamos los dias disponibles
+        let is_after = false;
+        let current = start_date;
+        while ( ! is_after ){
+
+            const day_name = moment(current).locale('es').format('dddd');
+
+            if ( available_days.includes( day_name ) ){
+                calendar_control.addSelected(current);
+            }
+
+            is_after = moment(current).add(1,'days').isAfter(end_date);
+            current = moment(current).add(1,'days').format('YYYY-MM-DD');
+        }
+    }
+
 
     $(calendar_el).click(function(e){
 
@@ -80,7 +91,6 @@ while ( ! is_after ){
         // para la selección de elementos en la lista
         if ( $(e.target).is('li') && $(e.target).data('hour') ){
             const sel_hour = $(e.target).data('hour');
-
             $('.available-hours li').removeClass('selected');
             $(e.target).addClass('selected');
         }
@@ -89,19 +99,18 @@ while ( ! is_after ){
 
 
     // get days ajax
-
     function get_data_per_day(selected_day){
 
         const template = "<li data-hour='{hour}'>🕒 {hour} <span>{cupos} cupos disponibles</span></li>";
         const dayname = moment(selected_day).locale('es').format('dddd');
 
         $.ajax({
-            url: dcms_new_user.ajaxurl,
+            url: dcms_object.ajaxurl,
             type: 'post',
             dataType: 'json',
             data: {
                 action:'dcms_get_available_hours',
-                nonce: dcms_new_user.nonce,
+                nonce: dcms_object.nonce,
                 type: $(calendar_el).attr('id'),
                 date: selected_day,
                 dayname
@@ -123,34 +132,14 @@ while ( ! is_after ){
 
                     $('.cal-sel-date .available-hours').append(str);
                 }
-
-
             }
 
         })
         .always( function(){
             $('.cal-sel-date .waiting').hide();
-        });
+        }); // ajax
+
     }
 
 })( jQuery );
-
-
-
-// Todo:
-// 1- foreach de todas las fechas desde el start_date hasta el end_date
-// 2- Comparar si la fecha esta dentro del get_available_days
-// 3- Al hacer click en una fecha, mostrar los horarios habilitados
-// 4- Para mostrar los horarios tengo que sumar los horarios existentes en esa mismo día y hora
-// 5- Sino la cantidad agrupada sobrepasa la configuracíon de hora día, entonces no se mostrará
-
-// console.log(available_days); // lunes, martes, miercoles, jueves, viernes, sabado
-// console.log(start_date);
-// console.log(end_date);
-
-// calendar_user.addSelected('2021-06-26');
-// const fecha = '2021-06-26';
-// const x = moment(fecha).locale('es').format('dddd');
-// console.log(x);
-
 

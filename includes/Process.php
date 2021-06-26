@@ -12,7 +12,7 @@ class Process{
         add_action('wp_ajax_dcms_save_config',[ $this, 'process_save_config' ]);
 
         // Front-end
-        add_action('wp_ajax_dcms_get_available_hours',[ $this, 'get_available_hours' ]);
+        add_action('wp_ajax_nopriv_dcms_get_available_hours',[ $this, 'get_available_hours' ]);
     }
 
     // Front-end

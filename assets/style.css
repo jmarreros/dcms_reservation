@@ -2,6 +2,12 @@
 .cal-container {
   padding-left: 10%;
   padding-right: 10%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.cal-container > .cal-sel-date {
+  display: none;
 }
 
 .cal-sel-date {
@@ -55,14 +61,6 @@
   border: 2px solid #ccc;
 }
 
-/* .tavo-calendar__day_abs-today .tavo-calendar__day-inner {
-  border: 2px solid black;
-} */
-
-/* .tavo-calendar__day-inner {
-  border-radius: 12px !important;
-} */
-
 .tavo-calendar__day_highlight {
   color: #aaa !important;
 }
@@ -96,12 +94,13 @@
   margin-bottom: 16px;
   box-shadow: 0 0 4px #ccc;
   padding: 10px;
+  min-width: 260px;
 }
 
 .cal-sel-date h4 {
   margin: 0;
   text-align: center;
-  font-size: 15px;
+  font-size: 16px;
   text-transform: uppercase;
 }
 
@@ -115,8 +114,10 @@
 .available-hours li {
   cursor: pointer;
   border: 1px solid #ccc;
-  padding: 8px;
   margin-top: 6px;
+  padding: 4px;
+  font-size: 16px;
+  line-height: 22px;
 }
 
 .available-hours li:hover {
@@ -131,7 +132,7 @@
 .available-hours li span {
   pointer-events: none;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 14px;
   color: green;
   display: block;
 }
@@ -142,6 +143,7 @@
 
 .cal-sel-date .no-data {
   padding: 20px;
+  font-size: 16px;
   display: none;
 }
 
@@ -149,6 +151,69 @@
   transform: scale(1.5);
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+/*Form new users*/
+.frm-new-users {
+  max-width: 800px;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.frm-new-users .button {
+  cursor: pointer;
+  margin-top: 20px;
+  background-color: #bc2427;
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  text-transform: uppercase;
+  border-radius: 4px;
+  font-size: 15px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.frm-new-users .button:hover {
+  background-color: #8d191f;
+}
+
+.frm-new-users label {
+  margin-top: 12px;
+  font-weight: bold;
+  font-size: 14px;
+  display: inline-block;
+}
+
+.frm-new-users label span {
+  color: darkred;
+  margin-left: 10px;
+}
+
+.frm-new-users .container-policy label {
+  font-weight: normal;
+}
+.frm-new-users .container-policy a {
+  text-decoration: underline;
+}
+
+.frm-new-users .lbl-calendar {
+  margin-top: 20px;
+}
+
+.frm-new-users .cal-container {
+  margin-top: 12px;
+}
+
+.frm-new-users span.dashicons::before {
+  font-size: 16px;
+  vertical-align: middle;
+  color: gray;
+}
+
+.frm-new-users .container-policy input {
+  width: 20px;
+  height: 20px;
 }
 
 /*Spinner*/
