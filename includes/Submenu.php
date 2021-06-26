@@ -3,6 +3,7 @@
 namespace dcms\reservation\includes;
 
 use dcms\reservation\includes\Database;
+use dcms\reservation\helpers\Helper;
 
 /**
  * Class for creating a dashboard submenu
@@ -53,6 +54,9 @@ class Submenu{
             ]);
 
         $db = new Database();
+        $days = Helper::get_days();
+        $hours = Helper::get_hours();
+
         include_once (DCMS_RESERVATION_PATH. '/backend/views/settings-main.php');
     }
 

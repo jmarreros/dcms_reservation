@@ -100,8 +100,55 @@
 
 .cal-sel-date h4 {
   margin: 0;
-  font-size: 14px;
+  text-align: center;
+  font-size: 15px;
   text-transform: uppercase;
+}
+
+.available-hours {
+  list-style: none;
+  max-width: 400px;
+  margin: auto;
+  padding: 0;
+}
+
+.available-hours li {
+  cursor: pointer;
+  border: 1px solid #ccc;
+  padding: 8px;
+  margin-top: 6px;
+}
+
+.available-hours li:hover {
+  background-color: #eee;
+}
+
+.available-hours li.selected {
+  background-color: #eee;
+  font-weight: bold;
+}
+
+.available-hours li span {
+  pointer-events: none;
+  font-weight: normal;
+  font-size: 12px;
+  color: green;
+  display: block;
+}
+
+.cal-sel-date .waiting {
+  display: none;
+}
+
+.cal-sel-date .no-data {
+  padding: 20px;
+  display: none;
+}
+
+.cal-sel-date .waiting .lds-ring {
+  transform: scale(1.5);
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 /*Spinner*/

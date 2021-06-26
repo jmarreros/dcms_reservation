@@ -92,6 +92,7 @@ while ( ! is_after ){
 
     function get_data_per_day(selected_day){
 
+        const template = "<li data-hour='{hour}'>🕒 {hour} <span>{cupos} cupos disponibles</span></li>";
         const dayname = moment(selected_day).locale('es').format('dddd');
 
         $.ajax({
@@ -106,47 +107,31 @@ while ( ! is_after ){
                 dayname
             },
             beforeSend: function(){
-
+                $('.cal-sel-date .available-hours li').remove();
+                $('.cal-sel-date .waiting').show();
+                $('.cal-sel-date .no-data').hide();
             }
         })
         .done( function(res){
-            console.log(res);
+            if ( $.isEmptyObject(res) ){
+                $('.cal-sel-date .no-data').show();
+            } else {
+
+                for (const hour in res) {
+                    const cupos = res[hour];
+                    const str = template.replaceAll('{hour}', hour).replaceAll('{cupos}', cupos);
+
+                    $('.cal-sel-date .available-hours').append(str);
+                }
+
+
+            }
+
         })
         .always( function(){
-
+            $('.cal-sel-date .waiting').hide();
         });
-
-        ;
     }
-
-    // $.ajax({
-    //     url : dcms_flogin.ajaxurl,
-    //     type: 'post',
-    //     data: {
-    //         action  : 'dcms_ajax_validate_login',
-    //         nonce   : dcms_flogin.nonce,
-    //         username: $('#username').val(),
-    //         password: $('#password').val(),
-    //     },
-    //     beforeSend: function(){
-    //         $(sspin).show();
-    //         $(sbutton).val('Validando ...').prop('disabled', true);;
-    //         $(smessage).hide();
-    //     }
-    // })
-    // .done( function(res) {
-    //     res = JSON.parse(res);
-    //     show_message(res, smessage);
-
-    //     if (res.status == 1){
-    //         window.location.href = dcms_flogin.url;
-    //     }
-    // })
-    // .always( function() {
-    //     $(sspin).hide();
-    //     $(sbutton).val('Ingresar').prop('disabled', false);;
-    // });
-
 
 })( jQuery );
 

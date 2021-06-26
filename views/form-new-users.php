@@ -4,19 +4,28 @@
         <div>
             <h4>Cupos disponibles</h4>
             <div>
+                <section class="waiting">
+                    <!--spinner-->
+                    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                </section>
+
+                <section class="no-data">
+                    No hay cupos disponibles
+                </section>
+
                 <ul class="available-hours">
-                    <li data-hour="10:00 - 10:30">
-                        🕒 10:00 - 10:30
+                    <!-- <li data-hour="10:00">
+                        🕒 10:00
                         <span>2 cupos disponibles</span>
                     </li>
-                    <li data-hour="11:00 - 11:30">
-                        🕒 11:00 - 11:30
+                    <li data-hour="10:30">
+                        🕒 10:30
                         <span>1 disponibles</span>
                     </li>
-                    <li data-hour="12:00 - 12:30">
-                        🕒 12:00 - 12:30
+                    <li data-hour="12:00">
+                        🕒 12:00
                         <span>10 disponibles</span>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
 
