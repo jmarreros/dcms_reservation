@@ -152,7 +152,7 @@
         const sspin     = '.frm-new-users > .lds-ring';
         const sbutton   = '.frm-new-users #send.button';
         const smessage  = '.frm-new-users section.message';
-
+        const scontrols = '.frm-new-users .control-container'
 
         // day hour validation
         if ( $('.frm-new-users .available-hours li.selected').length ){
@@ -189,6 +189,8 @@
         .done( function(res) {
             res = JSON.parse(res);
             show_message(res, smessage);
+            $(scontrols).remove();
+            $(sbutton).remove();
         })
         .always( function() {
             $(sspin).hide();
