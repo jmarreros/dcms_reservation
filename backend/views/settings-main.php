@@ -29,7 +29,7 @@ foreach ( $plugin_tabs as $tab_key => $tab_caption ) {
 echo '</h2>';
 
 // Fill content
-include_once('partials/calendar.php');
+include_once('partials/settings-main-calendar.php');
 
 echo "</div>"; //end wrap
 

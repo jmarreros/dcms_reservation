@@ -60,8 +60,14 @@ class Submenu{
         include_once (DCMS_RESERVATION_PATH. '/backend/views/settings-main.php');
     }
 
+    // Call back new users
     public function submenu_new_users_callback(){
-        echo "nuevos usuarios";
+        wp_enqueue_style('admin-reservation-style');
+
+        $db = new Database();
+        $report = $db->get_report_new_users(true); // report lastes new users
+
+        include_once (DCMS_RESERVATION_PATH. '/backend/views/new-users.php');
     }
 
     public function submenu_seats_callback(){

@@ -21,6 +21,42 @@
   text-align: right;
 }
 
+.container-report {
+  margin-top: 1.2rem;
+}
+
+.container-report header {
+  display: flex;
+  width: 100%;
+}
+
+.container-report header > * {
+  display: block;
+  width: 50%;
+}
+
+.container-report header .frm-export {
+  text-align: right;
+}
+
+.container-report .dcms-table {
+  margin-top: 20px;
+  width: 100%;
+  background-color: white;
+}
+
+.container-report .dcms-table th {
+  background-color: black;
+  color: white;
+}
+
+.dcms-shortcode {
+  background-color: #0073aa;
+  border-radius: 4px;
+  padding: 10px 20px;
+  color: white;
+}
+
 /*Spinner*/
 .lds-ring {
   display: inline-block;

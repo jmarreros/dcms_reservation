@@ -107,4 +107,17 @@ class Database{
         return $this->wpdb->get_results( $sql );
     }
 
+    // report
+    public function get_report_new_users($limit = false){
+        $sql = "SELECT `name`,`lastname`,`dni`,`email`,`phone`, DATE_FORMAT(`day`,'%Y-%m-%d') `day`,`hour`, `date`
+                FROM {$this->table_new_user}
+                ORDER BY STR_TO_DATE( CONCAT(DATE_FORMAT(`day`,'%Y-%m-%d'), `hour`), '%Y-%m-%d %H:%i') DESC";
+
+        if ( $limit ) {
+            $sql .= " LIMIT 100";
+        }
+
+        return $this->wpdb->get_results( $sql );
+    }
+
 }
