@@ -13,9 +13,10 @@
         $('#tbl-calendar input').each(function(){
             const day = $(this).data('day');
             const hour = $(this).data('hour');
+            const order = $(this).data('order');
             const qty = $(this).val();
 
-            calendar[++i] = day + '|' + hour + '|' + qty;
+            calendar[++i] = day + '|' + hour + '|' + qty + '|' + order;
         });
 
         // Type

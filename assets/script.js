@@ -4,6 +4,8 @@
 
     let calendar_el = null; // calendar element
     let dcms_object = null; // dcms_new_user, dcms_change_seats
+    let select_day  = ''; // Select day from calendar
+    let select_hour = ''; // select specific hour
 
     // Config calendar for new users
     if (typeof dcms_new_user != "undefined") {
@@ -46,7 +48,6 @@
         }
     }
 
-
     $(calendar_el).click(function(e){
 
         // Para la seleccion de días
@@ -62,7 +63,7 @@
             let position = -1;
             let current = 0;
 
-            const select_day = year + '-' +month + '-' + day;
+            select_day = year + '-' +month + '-' + day;
             // Call select day
             get_data_per_day(select_day);
 
@@ -96,7 +97,6 @@
         }
 
     }); // Click
-
 
     // get days ajax
     function get_data_per_day(selected_day){
@@ -138,7 +138,79 @@
         .always( function(){
             $('.cal-sel-date .waiting').hide();
         }); // ajax
+    } // get_data_per_day
 
+
+    // Save new users
+    // ----------------------------------------------------------------
+
+    // Ajax save new user
+
+    $('#frm-new-users').submit(function(e){
+        e.preventDefault();
+
+        const sspin     = '.frm-new-users > .lds-ring';
+        const sbutton   = '.frm-new-users #send.button';
+        const smessage  = '.frm-new-users section.message';
+
+
+        // day hour validation
+        if ( $('.frm-new-users .available-hours li.selected').length ){
+            select_hour = $('.frm-new-users .available-hours li.selected').data('hour');
+        } else {
+            show_message({
+                status:0,
+                message: 'Tienes que seleccionar una fecha y hora'
+            }, smessage);
+            return false;
+        }
+
+
+        $.ajax({
+			url : dcms_object.ajaxurl,
+			type: 'post',
+			data: {
+				action  : 'dcms_save_new_user',
+                nonce   : dcms_object.nonce,
+                name    : $('#name').val(),
+                lastname: $('#lastname').val(),
+                dni     : $('#dni').val(),
+                email   : $('#email').val(),
+                phone   : $('#phone').val(),
+                select_day,
+                select_hour
+			},
+            beforeSend: function(){
+                $(sspin).show();
+                $(sbutton).val('Enviando ...').prop('disabled', true);;
+                $(smessage).hide();
+            }
+        })
+        .done( function(res) {
+            res = JSON.parse(res);
+            show_message(res, smessage);
+        })
+        .always( function() {
+            $(sspin).hide();
+            $(sbutton).val('Enviar').prop('disabled', false);;
+        });
+
+
+    });
+
+
+    //Aux Functions
+    // ----------------------------------------------------------------
+
+    // Aux function to show message
+    function show_message(res, cmessage){
+        if (res.status == 0 ) {
+            $(cmessage).addClass('error');
+        } else {
+            $(cmessage).removeClass('error');
+        }
+
+        $(cmessage).show().html(res.message);
     }
 
 })( jQuery );

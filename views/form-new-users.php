@@ -37,7 +37,7 @@
         <section class="message" style="display:none;">
         </section>
 
-        <input type="submit" class="button" id="send" name="send" value="<?php _e('Enviar', 'dcms-send-pin') ?>" tabindex="7" />
+        <input type="submit" class="button" id="send" name="send" value="Enviar" tabindex="7" />
         <!--spinner-->
         <div class="lds-ring" style="display:none;"><div></div><div></div><div></div><div></div></div>
 

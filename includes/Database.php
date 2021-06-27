@@ -26,10 +26,10 @@ class Database{
     }
 
     // Save calendar config, insert or update
-    public function save_config_calendar($id, $day, $hour, $qty, $type){
-        $sql = "INSERT INTO {$this->table_config} (`id`, `day`, `range`, `qty`, `type`)
-                VALUES('{$id}', '{$day}', '{$hour}', $qty, '$type')
-            ON DUPLICATE KEY UPDATE qty = $qty";
+    public function save_config_calendar($id, $day, $hour, $qty, $order, $type){
+        $sql = "INSERT INTO {$this->table_config} (`id`, `day`, `range`, `qty`, `order`, `type`)
+                VALUES('{$id}', '{$day}', '{$hour}', '{$qty}', '{$order}', '{$type}')
+            ON DUPLICATE KEY UPDATE `qty` = $qty, `order` = $order";
 
         return $this->wpdb->query($sql);
     }
@@ -40,8 +40,9 @@ class Database{
                     `id` varchar(100),
                     `day` varchar(50) DEFAULT NULL,
                     `range` varchar(50) DEFAULT NULL,
-                    `qty` smallint unsigned DEFAULT 0,
+                    `qty` smallint DEFAULT 0,
                     `type` varchar(50) DEFAULT NULL,
+                    `order` smallint DEFAULT 0,
                     PRIMARY KEY (`id`)
             )";
 
@@ -85,4 +86,25 @@ class Database{
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
     }
+
+
+    // Save reservation
+    public function save_reservation_new_user($values){
+        return $this->wpdb->insert($this->table_new_user, $values);
+    }
+
+    // Get diff cupos specific day
+    public function get_available_hours_new_user($date, $day_name){
+        $sql = "SELECT rc.`range`, ( rc.`qty` - IFNULL(nu.`qty`,0) ) diff
+                FROM {$this->table_config}  rc
+                LEFT JOIN (SELECT `hour`, count(`hour`) qty FROM {$this->table_new_user}
+                            WHERE `day` = '{$date}'
+                            GROUP BY `hour`) nu
+                ON nu.hour = rc.range
+                WHERE rc.`type`='new-users' AND rc.`day` = '{$day_name}' AND rc.qty > 0
+                ORDER BY rc.`order`";
+
+        return $this->wpdb->get_results( $sql );
+    }
+
 }

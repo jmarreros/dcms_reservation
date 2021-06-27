@@ -13,29 +13,63 @@ class Process{
 
         // Front-end
         add_action('wp_ajax_nopriv_dcms_get_available_hours',[ $this, 'get_available_hours' ]);
+        add_action('wp_ajax_nopriv_dcms_save_new_user',[ $this, 'save_new_user' ]);
     }
 
-    // Front-end
-    // ----------
+    // Front-end new user
+    // -------------------
 
-    // Ajax callback - Get hours specific day
+    // Fill data - Get hours specific day
     public function get_available_hours(){
-        $type       = $_POST['type']??null;
+        // $type       = $_POST['type']??null;
         $date       = $_POST['date']??'';
         $day_name   = $_POST['dayname']??'';
 
-        error_log(print_r($day_name,true));
-        error_log(print_r($date,true));
-        error_log(print_r($type,true));
+        $db = new Database();
 
+        $hours = $db->get_available_hours_new_user($date, $day_name);
 
-        $res = [
-            '8:00' => 2,
-            '9:00' => 3,
-            '10:00' => 1,
+        $res = [];
+        foreach ($hours as $hour) {
+            if ( $hour->diff > 0 ){
+                $res[$hour->range] = $hour->diff;
+            }
+        }
+
+        echo json_encode($res);
+        wp_die();
+    }
+
+    // Saving ajax new user reservation
+    public function save_new_user(){
+        $values = [
+            'name'      => $_POST['name']??'',
+            'lastname'  => $_POST['lastname']??'',
+            'dni'       => $_POST['dni']??'',
+            'email'     => $_POST['email']??'',
+            'phone'     => $_POST['phone']??'',
+            'day'       => $_POST['select_day']??'',
+            'hour'      => $_POST['select_hour']??'',
         ];
 
-        // $res = [];
+        // Validate nonce
+        $this->validate_nonce('ajax-nonce-new-user');
+
+        // Validate fields
+        $this->validate_fields_new_user($values);
+
+        $db = new Database();
+        if ( ! $db->save_reservation_new_user($values) ){
+            $res = [
+                'status' => 0,
+                'message' => "Ocurrió algún error al guardar la reserva",
+            ];
+        } else {
+            $res = [
+                'status' => 1,
+                'message' => "✅ Se ha realizado su reserva correctamente",
+            ];
+        }
 
         echo json_encode($res);
         wp_die();
@@ -69,9 +103,10 @@ class Process{
                     $day = $item[0];
                     $hour = $item[1];
                     $qty = $item[2]?$item[2]:0;
+                    $order = $item[3];
                     $id = md5($day.$hour.$type);
 
-                    $db->save_config_calendar($id, $day, $hour, $qty, $type);
+                    $db->save_config_calendar($id, $day, $hour, $qty, $order, $type);
                 }
             }
 
@@ -91,7 +126,22 @@ class Process{
         wp_die();
     }
 
+    // Aux validate fields new user form
+    private function validate_fields_new_user($values){
+        foreach($values as $key => $value){
+            if ($value == '' && $key != 'phone'){
+                $res = [
+                    'status' => 0,
+                    'message' => "Falta algún campo requerido",
+                ];
+                echo json_encode($res);
+                wp_die();
+                break;
+            }
+        }
+    }
 
+    // Aux validate nonce
     private function validate_nonce( $nonce_name ){
         if ( ! wp_verify_nonce( $_POST['nonce'], $nonce_name ) ) {
             $res = [

@@ -43,6 +43,7 @@
                         <input
                             data-day="<?= $days[$j] ?>"
                             data-hour="<?= $hours[$i] ?>"
+                            data-order="<?= $i ?>"
                             type='number'
                             min="0"
                             max="1000"
