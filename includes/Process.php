@@ -60,6 +60,10 @@ class Process{
 
         $db = new Database();
         if ( ! $db->save_reservation_new_user($values) ){
+
+            // Send email reservation new user
+            $this->send_email_new_user();
+
             $res = [
                 'status' => 0,
                 'message' => "Ocurrió algún error al guardar la reserva",
@@ -139,6 +143,19 @@ class Process{
                 break;
             }
         }
+    }
+
+    // Send email for new users (alta abonados)
+    private function send_email_new_user( $email ){
+        // $options = get_option( 'dcms_pin_options' );
+
+        // $headers = ['Content-Type: text/html; charset=UTF-8'];
+        // $subject = $options['dcms_subject_email'];
+        // $body    = $options['dcms_text_email'];
+        // $body = str_replace( '%id%', $identify, $body );
+        // $body = str_replace( '%pin%', $pin, $body );
+
+        // return wp_mail( $email, $subject, $body, $headers );
     }
 
     // Aux validate nonce

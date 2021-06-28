@@ -4,6 +4,7 @@ namespace dcms\reservation\includes;
 
 use dcms\reservation\includes\Database;
 use dcms\reservation\helpers\Helper;
+use dcms\reservation\includes\Settings;
 
 /**
  * Class for creating a dashboard submenu
@@ -65,6 +66,7 @@ class Submenu{
         wp_enqueue_style('admin-reservation-style');
 
         $db = new Database();
+
         $report = $db->get_report_new_users(true); // report lastes new users
 
         include_once (DCMS_RESERVATION_PATH. '/backend/views/new-users.php');

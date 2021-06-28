@@ -22,6 +22,7 @@ use dcms\reservation\includes\Database;
 use dcms\reservation\includes\Process;
 use dcms\reservation\includes\Shortcode;
 use dcms\reservation\includes\Export;
+use dcms\reservation\includes\Settings;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -80,6 +81,7 @@ final class Loader{
 		new Process();
 		new Shortcode();
 		new Export();
+		new Settings();
 	}
 
 }
