@@ -63,7 +63,7 @@
             let position = -1;
             let current = 0;
 
-            select_day = year + '-' +month + '-' + day;
+            select_day = year + '-' + month + '-' + day.padStart(2,'0');
             // Call select day
             get_data_per_day(select_day);
 
