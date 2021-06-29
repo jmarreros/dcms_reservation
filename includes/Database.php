@@ -6,6 +6,7 @@ class Database{
     private $wpdb;
     private $table_config;
     private $table_new_user;
+    private $table_change_seats;
 
     public function __construct(){
         global $wpdb;
@@ -13,6 +14,7 @@ class Database{
         $this->wpdb = $wpdb;
         $this->table_config   = $this->wpdb->prefix.'dcms_reservation_config';
         $this->table_new_user = $this->wpdb->prefix.'dcms_reservation_new_user';
+        $this->table_change_seats = $this->wpdb->prefix.'dcms_reservation_change_seats';
     }
 
     // Calendar configuration backend methods
@@ -65,7 +67,7 @@ class Database{
         return $res;
     }
 
-    // Ne users
+    // New users
     // ----------------------------------------------------------------
 
     // Init activation create table new user
@@ -79,6 +81,7 @@ class Database{
                     `phone` varchar(50) DEFAULT NULL,
                     `day` datetime DEFAULT NULL,
                     `hour` char(20) DEFAULT NULL,
+                    `deleted` boolean DEFAULT FALSE,
                     `date` datetime DEFAULT CURRENT_TIMESTAMP,
                     PRIMARY KEY (`id`)
             )";
@@ -118,6 +121,26 @@ class Database{
         }
 
         return $this->wpdb->get_results( $sql );
+    }
+
+
+    // Change Seats
+    // ----------------------------------------------------------------
+
+    // Init activation create table new user
+    public function create_table_change_seats(){
+        $sql = " CREATE TABLE IF NOT EXISTS {$this->table_change_seats} (
+                    `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                    `user_id` bigint(20) unsigned NOT NULL,
+                    `day` datetime DEFAULT NULL,
+                    `hour` char(20) DEFAULT NULL,
+                    `deleted` boolean DEFAULT FALSE,
+                    `date` datetime DEFAULT CURRENT_TIMESTAMP,
+                    PRIMARY KEY (`id`)
+            )";
+
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta($sql);
     }
 
 }

@@ -19,8 +19,8 @@ class Submenu{
     public function register_submenu(){
         add_submenu_page(
             DCMS_RESERVATION_SUBMENU,
-            __('Configuracion Reservas','dcms-reservation'),
-            __('Configuracion Reservas','dcms-reservation'),
+            __('Opciones Calendario','dcms-reservation'),
+            __('Opciones Calendario','dcms-reservation'),
             'manage_options',
             'reservation-settings',
             [$this, 'submenu_configuration_callback']

@@ -7,11 +7,26 @@
     let select_day  = ''; // Select day from calendar
     let select_hour = ''; // select specific hour
 
-    // Config calendar for new users
+    // --- Config calendar for new users ---
     if (typeof dcms_new_user != "undefined") {
-
         dcms_object = dcms_new_user;
         calendar_el = document.querySelector('#cal-new-user');
+        const calendar_control = new TavoCalendar(calendar_el, {
+            range_select: false,
+            selected: [],
+            locale: 'es',
+            multi_select: false,
+            future_select: true,
+            past_select: false,
+            frozen: true,
+        });
+
+        initialization( calendar_control );
+    }
+    // --- Config calendar for change seats  ---
+    else if (typeof dcms_change_seats != "undefined"){
+        dcms_object = dcms_change_seats;
+        calendar_el = document.querySelector('#cal-change-seats');
         const calendar_control = new TavoCalendar(calendar_el, {
             range_select: false,
             selected: [],

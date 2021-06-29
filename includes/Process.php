@@ -24,13 +24,22 @@ class Process{
 
     // Fill data - Get hours specific day
     public function get_available_hours(){
-        // $type       = $_POST['type']??null;
+        $type       = $_POST['type']??null;
         $date       = $_POST['date']??'';
         $day_name   = $_POST['dayname']??'';
+        $hours      = [];
 
         $db = new Database();
 
-        $hours = $db->get_available_hours_new_user($date, $day_name);
+        switch ($type) {
+            case 'cal-new-user':
+                $hours = $db->get_available_hours_new_user($date, $day_name);
+                break;
+            case 'cal-change-seats':
+                // $hours = $db->get_available_hours_new_user($date, $day_name);
+                break;
+        }
+
 
         $res = [];
         foreach ($hours as $hour) {
@@ -184,3 +193,7 @@ class Process{
     }
 
 }
+
+// TODO:
+// Eliminar reservas de nuevos aboonados y de cambio de asientos.
+

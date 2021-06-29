@@ -18,6 +18,7 @@ class Plugin{
         $db = new Database();
         $db->create_table_config();
         $db->create_table_new_user();
+        $db->create_table_change_seats();
     }
 
     public function dcms_deactivation_plugin(){

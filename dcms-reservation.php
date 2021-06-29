@@ -42,13 +42,15 @@ final class Loader{
 		define ('DCMS_RESERVATION_SUBMENU', 'edit.php?post_type=events_sporting');
 
 		// Ranges
-		define ('DCMS_RANGE_NEW_USERS_START', 'dcms_start_change-seats');
-		define ('DCMS_RANGE_NEW_USERS_END', 'dcms_end_change-seats');
-		define ('DCMS_RANGE_CHANGE_SEAT_START', 'dcms_start_new-users');
-		define ('DCMS_RANGE_CHANGE_SEAT_END', 'dcms_end_new-users');
+		define ('DCMS_RANGE_NEW_USERS_START', 'dcms_start_new-users');
+		define ('DCMS_RANGE_NEW_USERS_END', 'dcms_end_new-users');
+		define ('DCMS_RANGE_CHANGE_SEAT_START', 'dcms_start_change-seats');
+		define ('DCMS_RANGE_CHANGE_SEAT_END', 'dcms_end_change-seats');
 
 		// Shortcode
 		define ('DCMS_SHORTCODE_NEW_USER', 'dcms_alta_abonados');
+		define ('DCMS_SHORTCODE_CHANGE_SEATS', 'dcms_cambiar_asientos');
+
 	}
 
 	// Load tex domain
