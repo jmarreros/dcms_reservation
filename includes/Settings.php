@@ -23,12 +23,15 @@ class Settings{
                                 'dcms_newusers_sfields' );
 
         add_settings_field('dcms_sender_email',
-                                __('Correo Emisor', 'dcms-reservation'),
-                                [$this, 'dcms_section_input_cb'],
-                                'dcms_newusers_sfields',
-                                'dcms_email_section',
-                                ['label_for' => 'dcms_sender_email',
-                                    'required' => true]
+                            __('Correo Emisor', 'dcms-reservation'),
+                            [$this, 'dcms_section_input_cb'],
+                            'dcms_newusers_sfields',
+                            'dcms_email_section',
+                            [
+                                'dcms_option' => 'dcms_newusers_options',
+                                'label_for' => 'dcms_sender_email',
+                                'required' => true
+                            ]
         );
 
         add_settings_field('dcms_sender_name',
@@ -36,8 +39,11 @@ class Settings{
                             [$this, 'dcms_section_input_cb'],
                             'dcms_newusers_sfields',
                             'dcms_email_section',
-                            ['label_for' => 'dcms_sender_name',
-                                'required' => true]
+                            [
+                              'dcms_option' => 'dcms_newusers_options',
+                              'label_for' => 'dcms_sender_name',
+                              'required' => true
+                            ]
         );
 
         add_settings_field('dcms_subject_email',
@@ -45,8 +51,11 @@ class Settings{
                             [$this, 'dcms_section_input_cb'],
                             'dcms_newusers_sfields',
                             'dcms_email_section',
-                            ['label_for' => 'dcms_subject_email',
-                                'required' => true]
+                            [
+                              'dcms_option' => 'dcms_newusers_options',
+                              'label_for' => 'dcms_subject_email',
+                              'required' => true
+                            ]
         );
 
         add_settings_field('dcms_text_email',
@@ -54,10 +63,16 @@ class Settings{
                             [$this, 'dcms_section_textarea_field'],
                             'dcms_newusers_sfields',
                             'dcms_email_section',
-                            ['label_for' => 'dcms_text_email',
-                             'description' => __('You can use <strong>%id%</strong> and <strong>%pin%</strong> to include the Identify and the PIN number between the text', 'dcms-reservation')]
+                            [
+                             'dcms_option' => 'dcms_newusers_options',
+                             'label_for' => 'dcms_text_email',
+                             'description' => __('Puedes usar %date% y %hour% para reemplazar la fecha y hora de la reserva', 'dcms-reservation')
+                            ]
         );
     }
+
+
+    // Métodos auxiliares genéricos
 
     // Callback section
     public function dcms_section_cb(){
@@ -66,16 +81,17 @@ class Settings{
 
     // Callback input field callback
     public function dcms_section_input_cb($args){
+        $dcms_option = $args['dcms_option'];
         $id = $args['label_for'];
         $req = isset($args['required']) ? 'required' : '';
         $class = isset($args['class']) ? "class='".$args['class']."'" : '';
         $desc = isset($args['description']) ? $args['description'] : '';
 
-        $options = get_option( 'dcms_newusers_options' );
+        $options = get_option( $dcms_option );
         $val = isset( $options[$id] ) ? $options[$id] : '';
 
-        printf("<input id='%s' name='dcms_newusers_options[%s]' class='regular-text' type='text' value='%s' %s %s>",
-                $id, $id, $val, $req, $class);
+        printf("<input id='%s' name='%s[%s]' class='regular-text' type='text' value='%s' %s %s>",
+                $id, $dcms_option, $id, $val, $req, $class);
 
         if ( $desc ) printf("<p class='description'>%s</p> ", $desc);
 
@@ -83,12 +99,13 @@ class Settings{
 
 
     public function dcms_section_textarea_field( $args ){
-
+        $dcms_option = $args['dcms_option'];
         $id = $args['label_for'];
         $desc = isset($args['description']) ? $args['description'] : '';
-        $options = get_option( 'dcms_newusers_options' );
+
+        $options = get_option( $dcms_option );
         $val = $options[$id];
-        printf("<textarea id='%s' name='dcms_newusers_options[%s]' rows='5' cols='80' >%s</textarea><p class='description'>%s</p>", $id, $id, $val, $desc);
+        printf("<textarea id='%s' name='%s[%s]' rows='5' cols='80' >%s</textarea><p class='description'>%s</p>", $id, $dcms_option, $id, $val, $desc);
 	}
 
 }

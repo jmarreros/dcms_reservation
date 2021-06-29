@@ -59,25 +59,48 @@ class Process{
         $this->validate_fields_new_user($values);
 
         $db = new Database();
-        if ( ! $db->save_reservation_new_user($values) ){
-
+        if ( $db->save_reservation_new_user($values) ){
             // Send email reservation new user
-            $this->send_email_new_user();
+            $this->send_email_new_user($values['email'], $values['day'], $values['hour']);
 
-            $res = [
-                'status' => 0,
-                'message' => "Ocurrió algún error al guardar la reserva",
-            ];
-        } else {
             $res = [
                 'status' => 1,
                 'message' => "✅ Se ha realizado su reserva correctamente",
+            ];
+
+        } else {
+            $res = [
+                'status' => 0,
+                'message' => "Ocurrió algún error al guardar la reserva",
             ];
         }
 
         echo json_encode($res);
         wp_die();
     }
+
+    // Send email for new users (alta abonados)
+    private function send_email_new_user( $email, $date, $hour ){
+        $options = get_option( 'dcms_newusers_options' );
+
+        add_filter( 'wp_mail_from', function(){
+            $options = get_option( 'dcms_newusers_options' );
+            return $options['dcms_sender_email'];
+        });
+        add_filter( 'wp_mail_from_name', function(){
+            $options = get_option( 'dcms_newusers_options' );
+            return $options['dcms_sender_name'];
+        });
+
+        $headers = ['Content-Type: text/html; charset=UTF-8'];
+        $subject = $options['dcms_subject_email'];
+        $body    = $options['dcms_text_email'];
+        $body = str_replace( '%date%', $date, $body );
+        $body = str_replace( '%hour%', $hour, $body );
+
+        return wp_mail( $email, $subject, $body, $headers );
+    }
+
 
     // Backend
     // -------
@@ -143,19 +166,6 @@ class Process{
                 break;
             }
         }
-    }
-
-    // Send email for new users (alta abonados)
-    private function send_email_new_user( $email ){
-        // $options = get_option( 'dcms_pin_options' );
-
-        // $headers = ['Content-Type: text/html; charset=UTF-8'];
-        // $subject = $options['dcms_subject_email'];
-        // $body    = $options['dcms_text_email'];
-        // $body = str_replace( '%id%', $identify, $body );
-        // $body = str_replace( '%pin%', $pin, $body );
-
-        // return wp_mail( $email, $subject, $body, $headers );
     }
 
     // Aux validate nonce
