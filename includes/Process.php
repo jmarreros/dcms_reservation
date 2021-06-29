@@ -13,7 +13,10 @@ class Process{
 
         // Front-end
         add_action('wp_ajax_nopriv_dcms_get_available_hours',[ $this, 'get_available_hours' ]);
+        add_action('wp_ajax_dcms_get_available_hours',[ $this, 'get_available_hours' ]);
+
         add_action('wp_ajax_nopriv_dcms_save_new_user',[ $this, 'save_new_user' ]);
+        add_action('wp_ajax_dcms_save_new_user',[ $this, 'save_new_user' ]);
     }
 
     // Front-end new user
