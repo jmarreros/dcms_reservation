@@ -14,9 +14,15 @@ class Settings{
     // Register seccions and fields
     public function init_configuration(){
         register_setting('dcms_new_users_options_bd', 'dcms_newusers_options' );
+        register_setting('dcms_change_seats_options_bd', 'dcms_changeseats_options' );
 
+        $this->fields_new_user();
+        $this->fields_change_seats();
+    }
 
-        // New User
+    // New user fields
+    private function fields_new_user(){
+
         add_settings_section('dcms_email_section',
                         __('Texto por defecto en correo', 'dcms-reservation'),
                                 [$this,'dcms_section_cb'],
@@ -65,6 +71,63 @@ class Settings{
                             'dcms_email_section',
                             [
                              'dcms_option' => 'dcms_newusers_options',
+                             'label_for' => 'dcms_text_email',
+                             'description' => __('Puedes usar %date% y %hour% para reemplazar la fecha y hora de la reserva', 'dcms-reservation')
+                            ]
+        );
+    }
+
+    // Change users fields
+    private function fields_change_seats(){
+
+        add_settings_section('dcms_email_section',
+                        __('Texto por defecto en correo', 'dcms-reservation'),
+                                [$this,'dcms_section_cb'],
+                                'dcms_changeseats_sfields' );
+
+        add_settings_field('dcms_sender_email',
+                            __('Correo Emisor', 'dcms-reservation'),
+                            [$this, 'dcms_section_input_cb'],
+                            'dcms_changeseats_sfields',
+                            'dcms_email_section',
+                            [
+                                'dcms_option' => 'dcms_changeseats_options',
+                                'label_for' => 'dcms_sender_email',
+                                'required' => true
+                            ]
+        );
+
+        add_settings_field('dcms_sender_name',
+                            __('Nombre emisor', 'dcms-reservation'),
+                            [$this, 'dcms_section_input_cb'],
+                            'dcms_changeseats_sfields',
+                            'dcms_email_section',
+                            [
+                              'dcms_option' => 'dcms_changeseats_options',
+                              'label_for' => 'dcms_sender_name',
+                              'required' => true
+                            ]
+        );
+
+        add_settings_field('dcms_subject_email',
+                            __('Asunto correo', 'dcms-reservation'),
+                            [$this, 'dcms_section_input_cb'],
+                            'dcms_changeseats_sfields',
+                            'dcms_email_section',
+                            [
+                              'dcms_option' => 'dcms_changeseats_options',
+                              'label_for' => 'dcms_subject_email',
+                              'required' => true
+                            ]
+        );
+
+        add_settings_field('dcms_text_email',
+                            __('Texto correo', 'dcms-reservation'),
+                            [$this, 'dcms_section_textarea_field'],
+                            'dcms_changeseats_sfields',
+                            'dcms_email_section',
+                            [
+                             'dcms_option' => 'dcms_changeseats_options',
                              'label_for' => 'dcms_text_email',
                              'description' => __('Puedes usar %date% y %hour% para reemplazar la fecha y hora de la reserva', 'dcms-reservation')
                             ]

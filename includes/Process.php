@@ -163,25 +163,24 @@ class Process{
 
     // Send mail change seats
     private function send_email_change_seats( $email, $date, $hour ){
-        error_log(print_r($email.'-'.$date.'-'.$hour, true));
-        // $options = get_option( 'dcms_newusers_options' );
+        $options = get_option( 'dcms_changeseats_options' );
 
-        // add_filter( 'wp_mail_from', function(){
-        //     $options = get_option( 'dcms_newusers_options' );
-        //     return $options['dcms_sender_email'];
-        // });
-        // add_filter( 'wp_mail_from_name', function(){
-        //     $options = get_option( 'dcms_newusers_options' );
-        //     return $options['dcms_sender_name'];
-        // });
+        add_filter( 'wp_mail_from', function(){
+            $options = get_option( 'dcms_changeseats_options' );
+            return $options['dcms_sender_email'];
+        });
+        add_filter( 'wp_mail_from_name', function(){
+            $options = get_option( 'dcms_changeseats_options' );
+            return $options['dcms_sender_name'];
+        });
 
-        // $headers = ['Content-Type: text/html; charset=UTF-8'];
-        // $subject = $options['dcms_subject_email'];
-        // $body    = $options['dcms_text_email'];
-        // $body = str_replace( '%date%', $date, $body );
-        // $body = str_replace( '%hour%', $hour, $body );
+        $headers = ['Content-Type: text/html; charset=UTF-8'];
+        $subject = $options['dcms_subject_email'];
+        $body    = $options['dcms_text_email'];
+        $body = str_replace( '%date%', $date, $body );
+        $body = str_replace( '%hour%', $hour, $body );
 
-        // return wp_mail( $email, $subject, $body, $headers );
+        return wp_mail( $email, $subject, $body, $headers );
     }
 
 
