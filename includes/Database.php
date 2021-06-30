@@ -111,15 +111,11 @@ class Database{
     }
 
     // report new users
-    public function get_report_new_users($limit = false){
+    public function get_report_new_users(){
         $sql = "SELECT `name`,`lastname`,`dni`,`email`,`phone`, DATE_FORMAT(`day`,'%Y-%m-%d') `day`,`hour`, `date`
                 FROM {$this->table_new_user}
                 WHERE deleted = 0
                 ORDER BY STR_TO_DATE( CONCAT(DATE_FORMAT(`day`,'%Y-%m-%d'), `hour`), '%Y-%m-%d %H:%i') DESC";
-
-        if ( $limit ) {
-            $sql .= " LIMIT 100";
-        }
 
         return $this->wpdb->get_results( $sql );
     }

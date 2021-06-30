@@ -65,9 +65,15 @@ class Submenu{
     public function submenu_new_users_callback(){
         wp_enqueue_style('admin-reservation-style');
 
+        wp_enqueue_script('admin-reservation-search');
+        wp_localize_script('admin-reservation-search','dcms_res_search',[
+                'ajaxurl'=>admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('ajax-nonce-search')
+            ]);
+
         $db = new Database();
 
-        $report = $db->get_report_new_users(true); // report lastes new users
+        $report = $db->get_report_new_users(); // report lastes new users
 
         include_once (DCMS_RESERVATION_PATH. '/backend/views/new-users.php');
     }

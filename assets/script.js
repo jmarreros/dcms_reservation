@@ -144,7 +144,7 @@
                 for (const hour in res) {
                     const cupos = res[hour];
 
-                    if ( ! hide_hour_before_current(hour) ){
+                    if ( ! hide_hour_before_current(hour, selected_day) ){
                         const str = template.replaceAll('{hour}', hour).replaceAll('{cupos}', cupos);
                         $('.cal-sel-date .available-hours').append(str);
                     }
@@ -162,10 +162,16 @@
         }); // ajax
     } // get_data_per_day
 
-    function hide_hour_before_current(hour){
-        const now = new Date();
-        const current_hour = now.getHours();
-        return current_hour >= parseInt(hour);
+    // Aux function for day selected and current day comparison
+    function hide_hour_before_current(hour, selected_day){
+        const day_selected = moment(selected_day, "YYYY-MM-DD");
+        const day_now = moment().format('YYYY-MM-DD').valueOf();
+
+        if ( day_selected.isSame(day_now) ){
+            const now = new Date();
+            const current_hour = now.getHours();
+            return current_hour >= parseInt(hour);
+        }
     }
 
     // Save new users
