@@ -287,6 +287,3 @@ class Process{
 
 // TODO:
 // Eliminar reservas de nuevos aboonados y de cambio de asientos.
-
-// TODO:
-// Intefaz pa configuración correo y reporte de proceso change seats

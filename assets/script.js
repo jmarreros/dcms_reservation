@@ -143,9 +143,16 @@
 
                 for (const hour in res) {
                     const cupos = res[hour];
-                    const str = template.replaceAll('{hour}', hour).replaceAll('{cupos}', cupos);
 
-                    $('.cal-sel-date .available-hours').append(str);
+                    if ( ! hide_hour_before_current(hour) ){
+                        const str = template.replaceAll('{hour}', hour).replaceAll('{cupos}', cupos);
+                        $('.cal-sel-date .available-hours').append(str);
+                    }
+
+                }
+
+                if ( $('.cal-sel-date .available-hours').text().trim() == ''){
+                    $('.cal-sel-date .no-data').show();
                 }
             }
 
@@ -155,6 +162,11 @@
         }); // ajax
     } // get_data_per_day
 
+    function hide_hour_before_current(hour){
+        const now = new Date();
+        const current_hour = now.getHours();
+        return current_hour >= parseInt(hour);
+    }
 
     // Save new users
     // ----------------------------------------------------------------
