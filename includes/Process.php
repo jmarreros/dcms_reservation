@@ -8,21 +8,23 @@ use dcms\reservation\includes\Database;
 class Process{
 
     public function __construct(){
-        // Backend
+        /* Backend */
         add_action('wp_ajax_dcms_save_config',[ $this, 'process_save_config' ]);
 
-        // Front-end
+        /* Front-end */
+        // common
         add_action('wp_ajax_nopriv_dcms_get_available_hours',[ $this, 'get_available_hours' ]);
         add_action('wp_ajax_dcms_get_available_hours',[ $this, 'get_available_hours' ]);
 
+        // new user
         add_action('wp_ajax_nopriv_dcms_save_new_user',[ $this, 'save_new_user' ]);
         add_action('wp_ajax_dcms_save_new_user',[ $this, 'save_new_user' ]);
+
+        // change seats
+        add_action('wp_ajax_dcms_save_change_seats',[ $this, 'save_change_seats' ]);
     }
 
-    // Front-end new user
-    // -------------------
-
-    // Fill data - Get hours specific day
+    // Fill data - Get hours specific day - new users and change seats
     public function get_available_hours(){
         $type       = $_POST['type']??null;
         $date       = $_POST['date']??'';
@@ -34,9 +36,10 @@ class Process{
         switch ($type) {
             case 'cal-new-user':
                 $hours = $db->get_available_hours_new_user($date, $day_name);
+                error_log(print_r($hours,true));
                 break;
             case 'cal-change-seats':
-                // $hours = $db->get_available_hours_new_user($date, $day_name);
+                $hours = $db->get_available_hours_change_seats($date, $day_name);
                 break;
         }
 
@@ -51,6 +54,10 @@ class Process{
         echo json_encode($res);
         wp_die();
     }
+
+
+    // Front-end new user
+    // -------------------
 
     // Saving ajax new user reservation
     public function save_new_user(){
@@ -111,6 +118,84 @@ class Process{
         $body = str_replace( '%hour%', $hour, $body );
 
         return wp_mail( $email, $subject, $body, $headers );
+    }
+
+
+    // Front-end change seats
+    // -----------------------
+
+    // Saving ajax change seats
+    public function save_change_seats(){
+        $values = [
+            'user_id'   => get_current_user_id(),
+            'day'       => $_POST['select_day']??'',
+            'hour'      => $_POST['select_hour']??'',
+        ];
+        $email = $this->get_current_user_email();
+
+        // Validate nonce
+        $this->validate_nonce('ajax-nonce-change-seats');
+
+        // Validate fields
+        $this->validate_fields_change_seats($values);
+
+        // save data
+        $db = new Database();
+        if ( $db->save_reservation_change_seats($values) ){
+
+            $this->send_email_change_seats($email, $values['day'], $values['hour']);
+
+            $res = [
+                'status' => 1,
+                'message' => "✅ Se ha realizado su reserva correctamente",
+            ];
+        } else {
+            $res = [
+                'status' => 0,
+                'message' => "Ocurrió algún error al guardar la reserva",
+            ];
+        }
+
+        echo json_encode($res);
+        wp_die();
+    }
+
+
+    // Send mail change seats
+    private function send_email_change_seats( $email, $date, $hour ){
+        error_log(print_r($email.'-'.$date.'-'.$hour, true));
+        // $options = get_option( 'dcms_newusers_options' );
+
+        // add_filter( 'wp_mail_from', function(){
+        //     $options = get_option( 'dcms_newusers_options' );
+        //     return $options['dcms_sender_email'];
+        // });
+        // add_filter( 'wp_mail_from_name', function(){
+        //     $options = get_option( 'dcms_newusers_options' );
+        //     return $options['dcms_sender_name'];
+        // });
+
+        // $headers = ['Content-Type: text/html; charset=UTF-8'];
+        // $subject = $options['dcms_subject_email'];
+        // $body    = $options['dcms_text_email'];
+        // $body = str_replace( '%date%', $date, $body );
+        // $body = str_replace( '%hour%', $hour, $body );
+
+        // return wp_mail( $email, $subject, $body, $headers );
+    }
+
+
+
+    // Aux to validate fields change seats
+    private function validate_fields_change_seats($values){
+        if ( empty($values['day'])  || empty($values['hour']) ){
+            $res = [
+                'status' => 0,
+                'message' => "Tienes que ingresar una fecha y hora",
+            ];
+            echo json_encode($res);
+            wp_die();
+        }
     }
 
 
@@ -192,8 +277,17 @@ class Process{
         }
     }
 
+
+    // Aux get current user email
+    private function get_current_user_email(){
+        $current_user = wp_get_current_user();
+        return $current_user->user_email;
+    }
+
 }
 
 // TODO:
 // Eliminar reservas de nuevos aboonados y de cambio de asientos.
 
+// TODO:
+// Intefaz pa configuración correo y reporte de proceso change seats

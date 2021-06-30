@@ -32,7 +32,7 @@
             <!-- end calendar -->
 
             <div class="container-policy">
-                <input type="checkbox" id="policy" name="policy" tabindex="6" required> <label for="policy">Aceptar los <a href="/politica-de-privacidad-del-club/">Términos y Condiciones</a></label>
+                <input type="checkbox" id="policy" name="policy" tabindex="6" required> <label for="policy">Aceptar los <a href="/politica-de-privacidad-del-club/" target="_blank">Términos y Condiciones</a></label>
             </div>
         </div>
 

@@ -3,12 +3,13 @@
     <form id="frm-change-seats" class="frm-change-seats">
 
         <h3>Cambiar Asientos</h3>
-        <p>Reserva de cambio de asientos para abonado</p>
+        <p>
+            <strong>Reservar cita para cambio de asientos de abonado</strong>,
+            selecciona una fecha y hora,
+            se te enviará un correo de confirmación.
+        </p>
 
         <div class="control-container">
-            <label for="name">Nombre<span>*</span></label>
-            <input type="text" id="name" name="name" value="" maxlength="250" tabindex="1" required>
-
             <label class="lbl-calendar"><span class="dashicons dashicons-calendar-alt"></span> Selecciona una fecha y hora<span>*</span></label>
             <!-- Calendar -->
             <section  class="cal-container">
@@ -20,7 +21,7 @@
             <!-- end calendar -->
 
             <div class="container-policy">
-                <input type="checkbox" id="policy" name="policy" tabindex="6" required> <label for="policy">Aceptar los <a href="/politica-de-privacidad-del-club/">Términos y Condiciones</a></label>
+                <input type="checkbox" id="policy" name="policy" tabindex="6" required> <label for="policy">Aceptar los <a href="/politica-de-privacidad-del-club/" target="_blank">Términos y Condiciones</a></label>
             </div>
         </div>
 

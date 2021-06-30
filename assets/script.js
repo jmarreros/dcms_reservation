@@ -216,6 +216,62 @@
     });
 
 
+
+    // Save change seats
+    // ----------------------------------------------------------------
+
+    // Ajax change seats
+
+    $('#frm-change-seats').submit(function(e){
+        e.preventDefault();
+
+        const sspin     = '.frm-change-seats > .lds-ring';
+        const sbutton   = '.frm-change-seats #send.button';
+        const smessage  = '.frm-change-seats section.message';
+        const scontrols = '.frm-change-seats .control-container'
+
+        // day hour validation
+        if ( $('.frm-change-seats .available-hours li.selected').length ){
+            select_hour = $('.frm-change-seats .available-hours li.selected').data('hour');
+        } else {
+            show_message({
+                status:0,
+                message: 'Tienes que seleccionar una fecha y hora'
+            }, smessage);
+            return false;
+        }
+
+
+        $.ajax({
+			url : dcms_object.ajaxurl,
+			type: 'post',
+			data: {
+				action  : 'dcms_save_change_seats',
+                nonce   : dcms_object.nonce,
+                select_day,
+                select_hour
+			},
+            beforeSend: function(){
+                $(sspin).show();
+                $(sbutton).val('Enviando ...').prop('disabled', true);;
+                $(smessage).hide();
+            }
+        })
+        .done( function(res) {
+            res = JSON.parse(res);
+            show_message(res, smessage);
+            $(scontrols).remove();
+            $(sbutton).remove();
+        })
+        .always( function() {
+            $(sspin).hide();
+            $(sbutton).val('Enviar').prop('disabled', false);;
+        });
+
+    });
+
+
+
     //Aux Functions
     // ----------------------------------------------------------------
 

@@ -91,12 +91,12 @@ class Database{
     }
 
 
-    // Save reservation
+    // Save new user reservation
     public function save_reservation_new_user($values){
         return $this->wpdb->insert($this->table_new_user, $values);
     }
 
-    // Get diff cupos specific day
+    // Get diff cupos specific day - new users
     public function get_available_hours_new_user($date, $day_name){
         $sql = "SELECT rc.`range`, ( rc.`qty` - IFNULL(nu.`qty`,0) ) diff
                 FROM {$this->table_config}  rc
@@ -110,7 +110,7 @@ class Database{
         return $this->wpdb->get_results( $sql );
     }
 
-    // report
+    // report new users
     public function get_report_new_users($limit = false){
         $sql = "SELECT `name`,`lastname`,`dni`,`email`,`phone`, DATE_FORMAT(`day`,'%Y-%m-%d') `day`,`hour`, `date`
                 FROM {$this->table_new_user}
@@ -141,6 +141,27 @@ class Database{
 
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
+    }
+
+
+    // Save change seats reservation
+    public function save_reservation_change_seats($values){
+        return $this->wpdb->insert($this->table_change_seats, $values);
+    }
+
+
+    // Get diff cupos for a day - change seats
+    public function get_available_hours_change_seats($date, $day_name){
+        $sql = "SELECT rc.`range`, ( rc.`qty` - IFNULL(cs.`qty`,0) ) diff
+                FROM {$this->table_config}  rc
+                LEFT JOIN (SELECT `hour`, count(`hour`) qty FROM {$this->table_change_seats}
+                            WHERE `day` = '{$date}'
+                            GROUP BY `hour`) cs
+                ON cs.hour = rc.range
+                WHERE rc.`type`='change-seats' AND rc.`day` = '{$day_name}' AND rc.qty > 0
+                ORDER BY rc.`order`";
+
+        return $this->wpdb->get_results( $sql );
     }
 
 }

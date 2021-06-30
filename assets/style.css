@@ -154,12 +154,14 @@
 }
 
 /*Form new users*/
+.frm-change-seats,
 .frm-new-users {
   max-width: 800px;
   margin: auto;
   margin-top: 20px;
 }
 
+.frm-change-seats .button,
 .frm-new-users .button {
   cursor: pointer;
   margin-top: 20px;
@@ -174,10 +176,12 @@
   vertical-align: middle;
 }
 
+.frm-change-seats .button:hover,
 .frm-new-users .button:hover {
   background-color: #8d191f;
 }
 
+.frm-change-seats label,
 .frm-new-users label {
   margin-top: 12px;
   font-weight: bold;
@@ -185,37 +189,46 @@
   display: inline-block;
 }
 
+.frm-change-seats label span,
 .frm-new-users label span {
   color: darkred;
   margin-left: 10px;
 }
 
+.frm-change-seats .container-policy label,
 .frm-new-users .container-policy label {
   font-weight: normal;
 }
+
+.frm-change-seats .container-policy a,
 .frm-new-users .container-policy a {
   text-decoration: underline;
 }
 
+.frm-change-seats .lbl-calendar,
 .frm-new-users .lbl-calendar {
   margin-top: 20px;
 }
 
+.frm-change-seats .cal-container,
 .frm-new-users .cal-container {
   margin-top: 12px;
 }
 
+.frm-change-seats span.dashicons::before,
 .frm-new-users span.dashicons::before {
   font-size: 16px;
   vertical-align: middle;
   color: gray;
 }
 
+.frm-change-seats .container-policy input,
 .frm-new-users .container-policy input {
   width: 20px;
   height: 20px;
 }
 
+.frm-change-seats .message,
 .frm-new-users .message {
   background-color: #ceeed8;
   color: #005a1e;
@@ -227,6 +240,7 @@
   margin-bottom: 10px;
 }
 
+.frm-change-seats .message.error,
 .frm-new-users .message.error {
   background-color: #fed5da;
   color: #831c2c;
