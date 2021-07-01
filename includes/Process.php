@@ -36,7 +36,6 @@ class Process{
         switch ($type) {
             case 'cal-new-user':
                 $hours = $db->get_available_hours_new_user($date, $day_name);
-                error_log(print_r($hours,true));
                 break;
             case 'cal-change-seats':
                 $hours = $db->get_available_hours_change_seats($date, $day_name);
@@ -80,7 +79,7 @@ class Process{
         $db = new Database();
         if ( $db->save_reservation_new_user($values) ){
             // Send email reservation new user
-            $this->send_email_new_user($values['email'], $values['day'], $values['hour']);
+            $this->send_email_new_user($values['name'], $values['email'], $values['day'], $values['hour']);
 
             $res = [
                 'status' => 1,
@@ -99,7 +98,7 @@ class Process{
     }
 
     // Send email for new users (alta abonados)
-    private function send_email_new_user( $email, $date, $hour ){
+    private function send_email_new_user( $name, $email, $date, $hour ){
         $options = get_option( 'dcms_newusers_options' );
 
         add_filter( 'wp_mail_from', function(){
@@ -116,6 +115,7 @@ class Process{
         $body    = $options['dcms_text_email'];
         $body = str_replace( '%date%', $date, $body );
         $body = str_replace( '%hour%', $hour, $body );
+        $body = str_replace( '%name%', $name, $body );
 
         return wp_mail( $email, $subject, $body, $headers );
     }
@@ -131,7 +131,10 @@ class Process{
             'day'       => $_POST['select_day']??'',
             'hour'      => $_POST['select_hour']??'',
         ];
-        $email = $this->get_current_user_email();
+
+        $current_user = wp_get_current_user();
+        $email = $current_user->user_email;
+        $name = $current_user->display_name;
 
         // Validate nonce
         $this->validate_nonce('ajax-nonce-change-seats');
@@ -143,7 +146,7 @@ class Process{
         $db = new Database();
         if ( $db->save_reservation_change_seats($values) ){
 
-            $this->send_email_change_seats($email, $values['day'], $values['hour']);
+            $this->send_email_change_seats($name, $email, $values['day'], $values['hour']);
 
             $res = [
                 'status' => 1,
@@ -162,7 +165,7 @@ class Process{
 
 
     // Send mail change seats
-    private function send_email_change_seats( $email, $date, $hour ){
+    private function send_email_change_seats( $name, $email, $date, $hour ){
         $options = get_option( 'dcms_changeseats_options' );
 
         add_filter( 'wp_mail_from', function(){
@@ -179,6 +182,7 @@ class Process{
         $body    = $options['dcms_text_email'];
         $body = str_replace( '%date%', $date, $body );
         $body = str_replace( '%hour%', $hour, $body );
+        $body = str_replace( '%name%', $name, $body );
 
         return wp_mail( $email, $subject, $body, $headers );
     }

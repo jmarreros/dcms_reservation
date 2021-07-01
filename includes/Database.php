@@ -167,10 +167,8 @@ class Database{
         $sql = "SELECT vu.`name`, vu.`lastname`, vu.`identify`, vu.`number`, vu.`email`, DATE_FORMAT(cs.`day`,'%Y-%m-%d') `day`,cs.`hour`, cs.`date`
                 FROM {$this->table_change_seats} cs
                 INNER JOIN {$this->view_users} vu ON cs.user_id = vu.user_id
-                WHERE cs.`deleted` = 0 AND vu.`identify` <>'' AND cs.`day` BETWEEN '{$start}' AND '{$end}'
+                WHERE cs.`deleted` = 0 AND cs.`day` BETWEEN '{$start}' AND '{$end}'
                 ORDER BY STR_TO_DATE( CONCAT(DATE_FORMAT(cs.`day`,'%Y-%m-%d'), cs.`hour`), '%Y-%m-%d %H:%i') DESC";
-
-        error_log(print_r($sql,true));
 
         return $this->wpdb->get_results( $sql );
     }
