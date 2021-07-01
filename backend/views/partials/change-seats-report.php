@@ -20,8 +20,8 @@
                 <button type="submit" class="btn-export button button-primary"><?php _e('Exportar', 'dcms-report') ?></button>
             </form>
         </section>
-
     </header>
+
 
     <?php
         $fields = ['Nombre', 'Apellido', 'Identificación', 'Número', 'Email', 'Día reserva', 'Hora reserva'];
