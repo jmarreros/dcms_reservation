@@ -24,6 +24,7 @@ use dcms\reservation\includes\Shortcode;
 use dcms\reservation\includes\Export;
 use dcms\reservation\includes\Settings;
 
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }

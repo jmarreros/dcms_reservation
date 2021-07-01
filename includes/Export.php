@@ -17,6 +17,8 @@ class Export{
     public function process_export_new_users(){
         $db = new Database();
 
+
+
         $spreadsheet = new Spreadsheet();
         $writer = new Xlsx($spreadsheet);
 
@@ -33,7 +35,10 @@ class Export{
         $sheet->setCellValue('H1', 'Enviado');
 
         // Get data from table
-        $data = $db->get_report_new_users();
+        $val_start  = $_POST['date_start']??get_option('dcms_start_new-users');
+        $val_end    = $_POST['date_end']??get_option('dcms_end_new-users');
+
+        $data = $db->get_report_new_users($val_start, $val_end);
 
         $i = 2;
         foreach ($data as $row) {

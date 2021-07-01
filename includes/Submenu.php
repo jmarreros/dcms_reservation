@@ -65,15 +65,11 @@ class Submenu{
     public function submenu_new_users_callback(){
         wp_enqueue_style('admin-reservation-style');
 
-        wp_enqueue_script('admin-reservation-search');
-        wp_localize_script('admin-reservation-search','dcms_res_search',[
-                'ajaxurl'=>admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('ajax-nonce-search')
-            ]);
-
         $db = new Database();
+        $val_start  = $_POST['date_start']??get_option('dcms_start_new-users');
+        $val_end    = $_POST['date_end']??get_option('dcms_end_new-users');
 
-        $report = $db->get_report_new_users(); // report lastes new users
+        $report = $db->get_report_new_users($val_start, $val_end);
 
         include_once (DCMS_RESERVATION_PATH. '/backend/views/new-users.php');
     }
@@ -81,9 +77,11 @@ class Submenu{
     public function submenu_seats_callback(){
         wp_enqueue_style('admin-reservation-style');
 
-        // $db = new Database();
+        $db = new Database();
+        $val_start  = $_POST['date_start']??get_option('dcms_start_change-seats');
+        $val_end    = $_POST['date_end']??get_option('dcms_end_change-seats');
 
-        // $report = $db->get_report_new_users(true); // report lastes new users
+        $report = $db->get_report_change_seats($val_start, $val_end);
 
         include_once (DCMS_RESERVATION_PATH. '/backend/views/change-seats.php');
     }

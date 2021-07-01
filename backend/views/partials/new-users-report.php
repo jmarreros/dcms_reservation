@@ -6,18 +6,11 @@
     <header>
 
         <section class="date-range <?= $current_tab ?>">
-            <?php
-                $val_start  = get_option('dcms_start_new-users');
-                $val_end    = get_option('dcms_end_new-users');
-            ?>
-
-            Desde: <input type="date" id="date_start"  value="<?= $val_start ?>" />
-            Hasta: <input type="date" id="date_end" value="<?= $val_end ?>" />
-
-            <button id="btn-search" type="button" class="btn-search button button-primary"><?php _e('Filtrar', 'dcms-report') ?></button>
-
+            <form method="post" id="frm-search" class="frm-search" action="" >
+                Desde: <input type="date" id="date_start" name="date_start"  value="<?= $val_start ?>" />
+                Hasta: <input type="date" id="date_end" name="date_end" value="<?= $val_end ?>" />
+                <button id="btn-search" type="submit" class="btn-search button button-primary"><?php _e('Filtrar', 'dcms-report') ?></button>            </form>
         </section>
-
 
         <section class="buttons-export">
             <form method="post" id="frm-export" class="frm-export" action="<?php echo admin_url( 'admin-post.php' ) ?>" >

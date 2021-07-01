@@ -51,12 +51,6 @@ class Enqueue{
                             DCMS_RESERVATION_VERSION,
                             true);
 
-        wp_register_script('admin-reservation-search',
-                            DCMS_RESERVATION_URL.'/backend/assets/search.js',
-                            ['jquery'],
-                            DCMS_RESERVATION_VERSION,
-                            true);
-
         wp_register_style('admin-reservation-style',
                             DCMS_RESERVATION_URL.'/backend/assets/style.css',
                             [],

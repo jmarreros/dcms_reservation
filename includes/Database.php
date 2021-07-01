@@ -7,6 +7,7 @@ class Database{
     private $table_config;
     private $table_new_user;
     private $table_change_seats;
+    private $view_users;
 
     public function __construct(){
         global $wpdb;
@@ -15,6 +16,7 @@ class Database{
         $this->table_config   = $this->wpdb->prefix.'dcms_reservation_config';
         $this->table_new_user = $this->wpdb->prefix.'dcms_reservation_new_user';
         $this->table_change_seats = $this->wpdb->prefix.'dcms_reservation_change_seats';
+        $this->view_users = $this->wpdb->prefix.'dcms_view_users';
     }
 
     // Calendar configuration backend methods
@@ -111,15 +113,14 @@ class Database{
     }
 
     // report new users
-    public function get_report_new_users(){
+    public function get_report_new_users($start, $end){
         $sql = "SELECT `name`,`lastname`,`dni`,`email`,`phone`, DATE_FORMAT(`day`,'%Y-%m-%d') `day`,`hour`, `date`
                 FROM {$this->table_new_user}
-                WHERE deleted = 0
+                WHERE deleted = 0 AND `day` BETWEEN '{$start}' AND '{$end}'
                 ORDER BY STR_TO_DATE( CONCAT(DATE_FORMAT(`day`,'%Y-%m-%d'), `hour`), '%Y-%m-%d %H:%i') DESC";
 
         return $this->wpdb->get_results( $sql );
     }
-
 
     // Change Seats
     // ----------------------------------------------------------------
@@ -146,7 +147,6 @@ class Database{
         return $this->wpdb->insert($this->table_change_seats, $values);
     }
 
-
     // Get diff cupos for a day - change seats
     public function get_available_hours_change_seats($date, $day_name){
         $sql = "SELECT rc.`range`, ( rc.`qty` - IFNULL(cs.`qty`,0) ) diff
@@ -157,6 +157,20 @@ class Database{
                 ON cs.hour = rc.range
                 WHERE rc.`type`='change-seats' AND rc.`day` = '{$day_name}' AND rc.qty > 0
                 ORDER BY rc.`order`";
+
+        return $this->wpdb->get_results( $sql );
+    }
+
+     // report change seats
+     public function get_report_change_seats($start, $end){
+
+        $sql = "SELECT vu.`name`, vu.`lastname`, vu.`identify`, vu.`number`, vu.`email`, DATE_FORMAT(cs.`day`,'%Y-%m-%d') `day`,cs.`hour`, cs.`date`
+                FROM {$this->table_change_seats} cs
+                INNER JOIN {$this->view_users} vu ON cs.user_id = vu.user_id
+                WHERE cs.`deleted` = 0 AND vu.`identify` <>'' AND cs.`day` BETWEEN '{$start}' AND '{$end}'
+                ORDER BY STR_TO_DATE( CONCAT(DATE_FORMAT(cs.`day`,'%Y-%m-%d'), cs.`hour`), '%Y-%m-%d %H:%i') DESC";
+
+        error_log(print_r($sql,true));
 
         return $this->wpdb->get_results( $sql );
     }
