@@ -46,7 +46,6 @@
                 } else{
                     $('.dcms-table tr.remove').remove();
                 }
-                console.log(res);
             });
         } else {
             $(row).removeClass('remove');

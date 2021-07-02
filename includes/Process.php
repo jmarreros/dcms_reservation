@@ -126,6 +126,8 @@ class Process{
     public function delete_new_user(){
         $id = $_POST['id']??0;
 
+        $this->validate_nonce('ajax-res-new-user');
+
         $db = new Database();
         if ( $db->deleted_new_user($id) ){
             $res = ['status' => 1];
@@ -220,6 +222,8 @@ class Process{
     // Delete change seats
     public function delete_change_seats(){
         $id = $_POST['id']??0;
+
+        $this->validate_nonce('ajax-res-change-seats');
 
         $db = new Database();
         if ( $db->deleted_change_seats($id) ){
