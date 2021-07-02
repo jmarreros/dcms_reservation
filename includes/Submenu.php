@@ -81,6 +81,11 @@ class Submenu{
 
     public function submenu_seats_callback(){
         wp_enqueue_style('admin-reservation-style');
+        wp_enqueue_script('admin-reservation-script');
+        wp_localize_script('admin-reservation-script','dcms_res_change_seats',[
+                'ajaxurl'=>admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('ajax-res-change-seats')
+            ]);
 
         $db = new Database();
         $val_start  = $_POST['date_start']??get_option('dcms_start_change-seats');

@@ -23,6 +23,7 @@ class Process{
 
         // change seats
         add_action('wp_ajax_dcms_save_change_seats',[ $this, 'save_change_seats' ]);
+        add_action('wp_ajax_dcms_delete_change_seats',[ $this, 'delete_change_seats' ]);
     }
 
     // Fill data - Get hours specific day - new users and change seats
@@ -216,6 +217,20 @@ class Process{
         }
     }
 
+    // Delete change seats
+    public function delete_change_seats(){
+        $id = $_POST['id']??0;
+
+        $db = new Database();
+        if ( $db->deleted_change_seats($id) ){
+            $res = ['status' => 1];
+        } else{
+            $res = ['status' => 0];
+        }
+
+        echo json_encode($res);
+        wp_die();
+    }
 
     // Backend
     // -------

@@ -1,10 +1,61 @@
 (function( $ ) {
 	'use strict';
 
+    let dcms_object = null;
+    let dcms_delete_action = '';
     const spinner = '.lds-ring';
     const btnSave = '#save_res_config';
     const message = $('.cmessage');
 
+    // Tipo de objeto para ambas pantallas, deleted items dcms_res_new_user, dcms_res_change_seats
+    if (typeof dcms_res_new_user != "undefined") {
+        dcms_object = dcms_res_new_user;
+        dcms_delete_action = 'dcms_delete_new_user';
+    }
+    else if (typeof dcms_res_change_seats != "undefined"){
+        dcms_object = dcms_res_change_seats;
+        dcms_delete_action = 'dcms_delete_change_seats';
+    }
+
+    //Deleted items new user, change seats
+    // ------------------------------------
+    $('.dcms-table .delete').click(function(e){
+        e.preventDefault();
+
+        const row = $(e.target).closest('tr');
+        const name = $(e.target).data('name');
+        const id = $(e.target).data('id');
+
+        $(row).addClass('remove');
+        const confirmation = confirm("¿Estas seguro de eliminar el registro de " + name + "?");
+
+        if ( confirmation ){
+            $.ajax({
+                url : dcms_object.ajaxurl,
+                type: 'post',
+                data: {
+                    action: dcms_delete_action,
+                    nonce   : dcms_object.nonce,
+                    id
+                }
+            })
+            .done( function(res) {
+                res = JSON.parse(res);
+                if (res.status == 0){
+                    alert('Hubo algún error, posiblemente el registro no existe');
+                } else{
+                    $('.dcms-table tr.remove').remove();
+                }
+                console.log(res);
+            });
+        } else {
+            $(row).removeClass('remove');
+        }
+
+    });
+
+    // Reservation configuration
+    // --------------------------
     $(btnSave).click(function(e){
         e.preventDefault();
 
@@ -65,40 +116,5 @@
         $(container).show().html(res.message);
     }
 
-
-    //Deleted items
-    $('.dcms-table .delete').click(function(e){
-        e.preventDefault();
-
-        const row = $(e.target).closest('tr');
-        const name = $(e.target).data('name');
-        const id = $(e.target).data('id');
-
-        $(row).addClass('remove');
-        const confirmation = confirm("¿Estas seguro de eliminar el registro de " + name + "?");
-
-        if ( confirmation ){
-            $.ajax({
-                url : dcms_res_new_user.ajaxurl,
-                type: 'post',
-                data: {
-                    action:'dcms_delete_new_user',
-                    nonce   : dcms_res_new_user.nonce,
-                    id
-                }
-            })
-            .done( function(res) {
-                res = JSON.parse(res);
-                if (res.status == 0){
-                    alert('Hubo algún error, posiblemente el registro no existe');
-                } else{
-                    $('.dcms-table tr.remove').remove();
-                }
-            });
-        } else {
-            $(row).removeClass('remove');
-        }
-
-    });
 
 })( jQuery );

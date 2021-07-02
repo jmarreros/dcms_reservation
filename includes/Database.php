@@ -130,7 +130,6 @@ class Database{
     }
 
 
-
     // Change Seats
     // ----------------------------------------------------------------
 
@@ -180,6 +179,13 @@ class Database{
                 ORDER BY STR_TO_DATE( CONCAT(DATE_FORMAT(cs.`day`,'%Y-%m-%d'), cs.`hour`), '%Y-%m-%d %H:%i') DESC";
 
         return $this->wpdb->get_results( $sql );
+    }
+
+    // update state deleted table
+    public function deleted_change_seats($id){
+        $data = ['deleted' => true];
+        $where = ['id' => $id];
+        return $this->wpdb->update($this->table_change_seats, $data, $where);
     }
 
 }
