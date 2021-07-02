@@ -64,6 +64,11 @@ class Submenu{
     // Call back new users
     public function submenu_new_users_callback(){
         wp_enqueue_style('admin-reservation-style');
+        wp_enqueue_script('admin-reservation-script');
+        wp_localize_script('admin-reservation-script','dcms_res_new_user',[
+                'ajaxurl'=>admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('ajax-res-new-user')
+            ]);
 
         $db = new Database();
         $val_start  = $_POST['date_start']??get_option('dcms_start_new-users');

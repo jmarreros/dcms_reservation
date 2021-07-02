@@ -57,6 +57,16 @@
   color: white;
 }
 
+.dcms-table .delete {
+  color: #b32d2e;
+  text-decoration: none;
+}
+
+tr.remove td {
+  background-color: #ff7b7c;
+  color: white;
+}
+
 /*Spinner*/
 .lds-ring {
   display: inline-block;

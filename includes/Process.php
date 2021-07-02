@@ -19,6 +19,7 @@ class Process{
         // new user
         add_action('wp_ajax_nopriv_dcms_save_new_user',[ $this, 'save_new_user' ]);
         add_action('wp_ajax_dcms_save_new_user',[ $this, 'save_new_user' ]);
+        add_action('wp_ajax_dcms_delete_new_user',[ $this, 'delete_new_user' ]);
 
         // change seats
         add_action('wp_ajax_dcms_save_change_seats',[ $this, 'save_change_seats' ]);
@@ -120,6 +121,20 @@ class Process{
         return wp_mail( $email, $subject, $body, $headers );
     }
 
+    // Delete new user
+    public function delete_new_user(){
+        $id = $_POST['id']??0;
+
+        $db = new Database();
+        if ( $db->deleted_new_user($id) ){
+            $res = ['status' => 1];
+        } else{
+            $res = ['status' => 0];
+        }
+
+        echo json_encode($res);
+        wp_die();
+    }
 
     // Front-end change seats
     // -----------------------

@@ -103,7 +103,7 @@ class Database{
         $sql = "SELECT rc.`range`, ( rc.`qty` - IFNULL(nu.`qty`,0) ) diff
                 FROM {$this->table_config}  rc
                 LEFT JOIN (SELECT `hour`, count(`hour`) qty FROM {$this->table_new_user}
-                            WHERE `day` = '{$date}'
+                            WHERE `day` = '{$date}' AND deleted = 0
                             GROUP BY `hour`) nu
                 ON nu.hour = rc.range
                 WHERE rc.`type`='new-users' AND rc.`day` = '{$day_name}' AND rc.qty > 0
@@ -114,13 +114,22 @@ class Database{
 
     // report new users
     public function get_report_new_users($start, $end){
-        $sql = "SELECT `name`,`lastname`,`dni`,`email`,`phone`, DATE_FORMAT(`day`,'%Y-%m-%d') `day`,`hour`, `date`
+        $sql = "SELECT `id`,`name`,`lastname`,`dni`,`email`,`phone`, DATE_FORMAT(`day`,'%Y-%m-%d') `day`,`hour`, `date`
                 FROM {$this->table_new_user}
                 WHERE deleted = 0 AND `day` BETWEEN '{$start}' AND '{$end}'
                 ORDER BY STR_TO_DATE( CONCAT(DATE_FORMAT(`day`,'%Y-%m-%d'), `hour`), '%Y-%m-%d %H:%i') DESC";
 
         return $this->wpdb->get_results( $sql );
     }
+
+    // update state deleted table
+    public function deleted_new_user($id){
+        $data = ['deleted' => true];
+        $where = ['id' => $id];
+        return $this->wpdb->update($this->table_new_user, $data, $where);
+    }
+
+
 
     // Change Seats
     // ----------------------------------------------------------------
@@ -152,7 +161,7 @@ class Database{
         $sql = "SELECT rc.`range`, ( rc.`qty` - IFNULL(cs.`qty`,0) ) diff
                 FROM {$this->table_config}  rc
                 LEFT JOIN (SELECT `hour`, count(`hour`) qty FROM {$this->table_change_seats}
-                            WHERE `day` = '{$date}'
+                            WHERE `day` = '{$date}' AND deleted = 0
                             GROUP BY `hour`) cs
                 ON cs.hour = rc.range
                 WHERE rc.`type`='change-seats' AND rc.`day` = '{$day_name}' AND rc.qty > 0
@@ -164,7 +173,7 @@ class Database{
      // report change seats
      public function get_report_change_seats($start, $end){
 
-        $sql = "SELECT vu.`name`, vu.`lastname`, vu.`identify`, vu.`number`, vu.`email`, DATE_FORMAT(cs.`day`,'%Y-%m-%d') `day`,cs.`hour`, cs.`date`
+        $sql = "SELECT cs.`id`, vu.`name`, vu.`lastname`, vu.`identify`, vu.`number`, vu.`email`, DATE_FORMAT(cs.`day`,'%Y-%m-%d') `day`,cs.`hour`, cs.`date`
                 FROM {$this->table_change_seats} cs
                 INNER JOIN {$this->view_users} vu ON cs.user_id = vu.user_id
                 WHERE cs.`deleted` = 0 AND cs.`day` BETWEEN '{$start}' AND '{$end}'

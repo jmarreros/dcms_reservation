@@ -24,7 +24,7 @@
     </header>
 
     <?php
-        $fields = ['Nombre', 'Apellido', 'DNI', 'Email', 'Teléfono', 'Día reserva', 'Hora reserva'];
+        $fields = ['Nombre', 'Apellido', 'DNI', 'Email', 'Teléfono', 'Día reserva', 'Hora reserva', ''];
     ?>
     <table class="dcms-table">
         <tr>
@@ -43,6 +43,7 @@
             <td><?= $row->phone ?></td>
             <td><?= $row->day ?></td>
             <td><?= $row->hour ?></td>
+            <td><a class="delete" data-id="<?= $row->id ?>" data-name="<?= $row->name . ' ' . $row->lastname ?>" href="#">Eliminar</a></td>
         </tr>
     <?php endforeach; ?>
     </table>
