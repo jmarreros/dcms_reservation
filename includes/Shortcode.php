@@ -67,9 +67,10 @@ class Shortcode{
         wp_enqueue_style('calendar-style');
         wp_enqueue_style('reservation-style');
 
-        $available_days = ['lunes', 'martes', 'miércoles'];
-        $start_date = '2021-06-30';
-        $end_date = '2021-07-30';
+        $db = new Database();
+        $available_days = $db->get_available_days('change-seats');
+        $start_date = get_option(DCMS_RANGE_CHANGE_SEAT_START);
+        $end_date = get_option(DCMS_RANGE_CHANGE_SEAT_END);
 
         wp_localize_script('reservation-script',
                             'dcms_change_seats',

@@ -50,10 +50,10 @@
         // Marcamos los dias disponibles
         let is_after = false;
         let current = start_date;
+
         while ( ! is_after ){
 
             const day_name = moment(current).locale('es').format('dddd');
-
             if ( available_days.includes( day_name ) ){
                 calendar_control.addSelected(current);
             }
@@ -70,15 +70,18 @@
              ( $(e.target).parent().hasClass('tavo-calendar__day_abs-future') || $(e.target).parent().hasClass('tavo-calendar__day_rel-today') ) &&
              $(e.target).parent().hasClass('tavo-calendar__day_select') ){
 
+            const name_months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
             const day   = $(e.target).text();
             const arr   = $(calendar_el).find('.tavo-calendar__month-label').text().split(', ');
-            const month = moment().month(arr[0]).locale('es').format("MM");
+            const month = name_months.indexOf(arr[0]) + 1;
             const year  = arr[1];
 
             let position = -1;
             let current = 0;
 
             select_day = year + '-' + month + '-' + day.padStart(2,'0');
+
             // Call select day
             get_data_per_day(select_day);
 
@@ -117,7 +120,9 @@
     function get_data_per_day(selected_day){
 
         const template = "<li data-hour='{hour}'>🕒 {hour} <span>{cupos} cupos disponibles</span></li>";
-        const dayname = moment(selected_day).locale('es').format('dddd');
+        const dayname = moment(selected_day, 'YYYY-MM-DD').locale('es').format('dddd');
+
+        console.log(dayname);
 
         $.ajax({
             url: dcms_object.ajaxurl,
