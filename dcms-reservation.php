@@ -3,7 +3,7 @@
 Plugin Name: Sporting Reservations
 Plugin URI: https://webservi.es
 Description: Reservation for sporting (Alta usuarios y cambio de asientos)
-Version: 1.0
+Version: 1.2
 Author: Webservi.es
 Author URI: https://decodecms.com
 Text Domain: dcms-reservation
@@ -36,7 +36,7 @@ final class Loader{
 
 	// Define all the constants we need
 	public function define_constants(){
-		define ('DCMS_RESERVATION_VERSION', '1.1');
+		define ('DCMS_RESERVATION_VERSION', '1.2');
 		define ('DCMS_RESERVATION_PATH', plugin_dir_path( __FILE__ ));
 		define ('DCMS_RESERVATION_URL', plugin_dir_url( __FILE__ ));
 		define ('DCMS_RESERVATION_BASE_NAME', plugin_basename( __FILE__ ));
@@ -51,6 +51,10 @@ final class Loader{
 		// Shortcode
 		define ('DCMS_SHORTCODE_NEW_USER', 'dcms_alta_abonados');
 		define ('DCMS_SHORTCODE_CHANGE_SEATS', 'dcms_cambiar_asientos');
+
+		// Exclusion
+		define ('DCMS_EXCLUDE_NEW_USERS', 'dcms_exclude_new-users');
+		define ('DCMS_EXCLUDE_CHANGE_SEAT', 'dcms_exclude_change-seats');
 
 	}
 

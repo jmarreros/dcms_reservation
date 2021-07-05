@@ -3,15 +3,19 @@
 namespace dcms\reservation\includes;
 
 use dcms\reservation\includes\Database;
+use dcms\reservation\helpers\Helper;
 
 // Class for the operations of plugin
 class Process{
 
     public function __construct(){
         /* Backend */
+
         add_action('wp_ajax_dcms_save_config',[ $this, 'process_save_config' ]);
+        add_action('admin_post_process_exclude_dates', [$this, 'process_exclude_dates']);
 
         /* Front-end */
+
         // common
         add_action('wp_ajax_nopriv_dcms_get_available_hours',[ $this, 'get_available_hours' ]);
         add_action('wp_ajax_dcms_get_available_hours',[ $this, 'get_available_hours' ]);
@@ -55,6 +59,39 @@ class Process{
         echo json_encode($res);
         wp_die();
     }
+
+
+    // Exclude dates, for new users an changes seats
+    public function process_exclude_dates(){
+        global $wp;
+
+        $type = $_POST['type']??null;
+        $dates = $_POST['dates']??null;
+
+        if ( $dates && $type ){
+
+            $dates = preg_split('/\r\n|\r|\n/', $dates);
+            $valid_dates = [];
+            foreach ($dates as $date){
+                if ( Helper::is_valid_date($date) ){
+                    $valid_dates[] = $date;
+                }
+            }
+
+            switch ($type){
+                case 'new-users':
+                            update_option(DCMS_EXCLUDE_NEW_USERS, $valid_dates);
+                            break;
+                case 'change-seats':
+                            update_option(DCMS_EXCLUDE_CHANGE_SEAT, $valid_dates);
+                            break;
+            }
+        }
+
+        wp_redirect( $_SERVER['HTTP_REFERER'] );
+    }
+
+
 
 
     // Front-end new user
@@ -181,7 +218,6 @@ class Process{
         wp_die();
     }
 
-
     // Send mail change seats
     private function send_email_change_seats( $name, $email, $date, $hour ){
         $options = get_option( 'dcms_changeseats_options' );
@@ -204,8 +240,6 @@ class Process{
 
         return wp_mail( $email, $subject, $body, $headers );
     }
-
-
 
     // Aux to validate fields change seats
     private function validate_fields_change_seats($values){
@@ -314,14 +348,4 @@ class Process{
         }
     }
 
-
-    // Aux get current user email
-    private function get_current_user_email(){
-        $current_user = wp_get_current_user();
-        return $current_user->user_email;
-    }
-
 }
-
-// TODO:
-// Eliminar reservas de nuevos aboonados y de cambio de asientos.

@@ -65,4 +65,27 @@
     <section class="cmessage">
     </section>
 
+
+    <section class="exclude-dates">
+        <h3>Excluir Fechas</h3>
+        <p>Ingresa una lista de fechas a excluir, en el formato yyyy-mm-dd (año-mes-día), por cada línea, ejemplo: 2021-07-02 </p>
+        <form method="post" id="frm-exclude" class="frm-exclude" action="<?php echo admin_url( 'admin-post.php' ) ?>" >
+            <?php
+                $dates_db = [];
+                switch ( $current_tab ){
+                    case 'new-users':
+                        $dates_db = get_option(DCMS_EXCLUDE_NEW_USERS);
+                        break;
+                    case 'change-seats':
+                        $dates_db = get_option(DCMS_EXCLUDE_CHANGE_SEAT);
+                        break;
+                }
+            ?>
+            <textarea name="dates"><?= implode(PHP_EOL, $dates_db) ?></textarea>
+            <input type="hidden" name="type" value="<?= $current_tab ?>">
+            <input type="hidden" name="action" value="process_exclude_dates">
+            <button type="submit" class="btn-exclude button button-primary"><?php _e('Grabar', 'dcms-report') ?></button>
+        </form>
+    </section>
+
 </section>

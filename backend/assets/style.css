@@ -126,3 +126,13 @@ tr.remove td {
   color: #831c2c;
   border-color: #831c2c;
 }
+
+.frm-exclude textarea {
+  width: 50%;
+  height: 200px;
+  display: block;
+}
+
+.frm-exclude button[type="submit"] {
+  margin-top: 10px;
+}
