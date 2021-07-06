@@ -46,6 +46,7 @@
         const available_days = dcms_object.available_days;
         const start_date = dcms_object.start_date;
         const end_date = dcms_object.end_date;
+        const exclude_dates = dcms_object.exclude;
 
         // Marcamos los dias disponibles
         let is_after = false;
@@ -53,13 +54,16 @@
 
         while ( ! is_after ){
 
-            const day_name = moment(current).locale('es').format('dddd');
+            const day_name = moment(current, 'YYYY-MM-DD').locale('es').format('dddd');
+
             if ( available_days.includes( day_name ) ){
-                calendar_control.addSelected(current);
+                if ( ! exclude_dates.includes(current) ){
+                    calendar_control.addSelected(current);
+                }
             }
 
-            is_after = moment(current).add(1,'days').isAfter(end_date);
-            current = moment(current).add(1,'days').format('YYYY-MM-DD');
+            is_after = moment(current, 'YYYY-MM-DD').add(1,'days').isAfter(end_date);
+            current = moment(current, 'YYYY-MM-DD').add(1,'days').format('YYYY-MM-DD');
         }
     }
 

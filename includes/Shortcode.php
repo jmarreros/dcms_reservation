@@ -42,6 +42,7 @@ class Shortcode{
                               'available_days' => $available_days,
                               'start_date' => $start_date,
                               'end_date' => $end_date,
+                              'exclude' => get_option(DCMS_EXCLUDE_NEW_USERS),
                               'nonce' => wp_create_nonce('ajax-nonce-new-user')]);
 
         ob_start();
@@ -78,6 +79,7 @@ class Shortcode{
                             'available_days' => $available_days,
                             'start_date' => $start_date,
                             'end_date' => $end_date,
+                            'exclude' => get_option(DCMS_EXCLUDE_CHANGE_SEAT),
                             'nonce' => wp_create_nonce('ajax-nonce-change-seats')]);
 
         ob_start();

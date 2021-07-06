@@ -66,9 +66,9 @@ class Process{
         global $wp;
 
         $type = $_POST['type']??null;
-        $dates = $_POST['dates']??null;
+        $dates = $_POST['dates']??'';
 
-        if ( $dates && $type ){
+        if ( $type ){
 
             $dates = preg_split('/\r\n|\r|\n/', $dates);
             $valid_dates = [];
@@ -80,18 +80,16 @@ class Process{
 
             switch ($type){
                 case 'new-users':
-                            update_option(DCMS_EXCLUDE_NEW_USERS, $valid_dates);
-                            break;
+                        update_option(DCMS_EXCLUDE_NEW_USERS, $valid_dates);
+                        break;
                 case 'change-seats':
-                            update_option(DCMS_EXCLUDE_CHANGE_SEAT, $valid_dates);
-                            break;
+                        update_option(DCMS_EXCLUDE_CHANGE_SEAT, $valid_dates);
+                        break;
             }
         }
 
         wp_redirect( $_SERVER['HTTP_REFERER'] );
     }
-
-
 
 
     // Front-end new user
