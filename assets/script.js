@@ -269,6 +269,8 @@
         }
 
 
+        const select_type = $('.frm-change-seats #type').val();
+
         $.ajax({
 			url : dcms_object.ajaxurl,
 			type: 'post',
@@ -276,7 +278,8 @@
 				action  : 'dcms_save_change_seats',
                 nonce   : dcms_object.nonce,
                 select_day,
-                select_hour
+                select_hour,
+                select_type
 			},
             beforeSend: function(){
                 $(sspin).show();

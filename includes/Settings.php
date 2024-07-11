@@ -129,7 +129,7 @@ class Settings{
                             [
                              'dcms_option' => 'dcms_changeseats_options',
                              'label_for' => 'dcms_text_email',
-                             'description' => __('Puedes usar %name%, %date% y %hour% para reemplazar el nombre, la fecha y hora de la reserva', 'dcms-reservation')
+                             'description' => __('Puedes usar %name%, %date%, %hour%, %type% para reemplazar el nombre, la fecha, hora, y tipo de reserva', 'dcms-reservation')
                             ]
         );
     }

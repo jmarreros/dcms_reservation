@@ -78,7 +78,8 @@ class Export{
         $sheet->setCellValue('E1', 'Email');
         $sheet->setCellValue('F1', 'Dia reserva');
         $sheet->setCellValue('G1', 'Hora reserva');
-        $sheet->setCellValue('H1', 'Enviado');
+	    $sheet->setCellValue('H1', 'Tipo');
+        $sheet->setCellValue('I1', 'Enviado');
 
         // Get data from table
         $val_start  = $_POST['date_start']??get_option('dcms_start_new-users');
@@ -95,7 +96,8 @@ class Export{
             $sheet->setCellValue('E'.$i, $row->email);
             $sheet->setCellValue('F'.$i, $row->day);
             $sheet->setCellValue('G'.$i, $row->hour);
-            $sheet->setCellValue('H'.$i, $row->date);
+	        $sheet->setCellValue('H'.$i, $row->type);
+            $sheet->setCellValue('I'.$i, $row->date);
             $i++;
         }
 

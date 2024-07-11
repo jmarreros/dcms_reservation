@@ -20,6 +20,15 @@
             </section>
             <!-- end calendar -->
 
+            <div class="container-type">
+                <label for="type">Tipo de reserva</label>
+                <select name="type" id="type" required>
+                    <option value="">Seleccionar</option>
+                    <option value="presencial">Presencial</option>
+                    <option value="telefonica">Llamada telefónica</option>
+                </select>
+            </div>
+
             <div class="container-policy">
                 <input type="checkbox" id="policy" name="policy" tabindex="6" required> <label for="policy">Aceptar los <a href="/politica-de-privacidad-del-club/" target="_blank">Términos y Condiciones</a></label>
             </div>

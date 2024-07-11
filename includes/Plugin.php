@@ -8,7 +8,7 @@ use dcms\reservation\includes\Database;
 class Plugin{
 
     public function __construct(){
-        // Activation/Desactivation
+        // Activation/Deactivation
         register_activation_hook( DCMS_RESERVATION_BASE_NAME, [ $this, 'dcms_activation_plugin'] );
         register_deactivation_hook( DCMS_RESERVATION_BASE_NAME, [ $this, 'dcms_deactivation_plugin'] );
     }

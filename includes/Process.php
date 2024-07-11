@@ -183,6 +183,7 @@ class Process{
             'user_id'   => get_current_user_id(),
             'day'       => $_POST['select_day']??'',
             'hour'      => $_POST['select_hour']??'',
+	        'type'      => $_POST['select_type']??'',
         ];
 
         $current_user = wp_get_current_user();
@@ -195,11 +196,14 @@ class Process{
         // Validate fields
         $this->validate_fields_change_seats($values);
 
+		error_log(print_r('Los valores',true));
+		error_log(print_r($values,true));
+		
         // save data
         $db = new Database();
         if ( $db->save_reservation_change_seats($values) ){
 
-            $this->send_email_change_seats($name, $email, $values['day'], $values['hour']);
+            $this->send_email_change_seats($name, $email, $values['day'], $values['hour'], $values['type']);
 
             $res = [
                 'status' => 1,
@@ -217,7 +221,7 @@ class Process{
     }
 
     // Send mail change seats
-    private function send_email_change_seats( $name, $email, $date, $hour ){
+    private function send_email_change_seats( $name, $email, $date, $hour, $type ){
         $options = get_option( 'dcms_changeseats_options' );
 
         add_filter( 'wp_mail_from', function(){
@@ -235,6 +239,7 @@ class Process{
         $body = str_replace( '%date%', $date, $body );
         $body = str_replace( '%hour%', $hour, $body );
         $body = str_replace( '%name%', $name, $body );
+	    $body = str_replace( '%type%', $type, $body );
 
         return wp_mail( $email, $subject, $body, $headers );
     }

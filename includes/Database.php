@@ -143,6 +143,7 @@ class Database{
                     `day` datetime DEFAULT NULL,
                     `hour` char(20) DEFAULT NULL,
                     `deleted` boolean DEFAULT FALSE,
+                    `type` varchar(100) DEFAULT NULL,
                     `date` datetime DEFAULT CURRENT_TIMESTAMP,
                     PRIMARY KEY (`id`)
             )";
@@ -174,7 +175,7 @@ class Database{
      // report change seats
      public function get_report_change_seats($start, $end){
 
-        $sql = "SELECT cs.`id`, vu.`name`, vu.`lastname`, vu.`identify`, vu.`number`, vu.`email`, DATE_FORMAT(cs.`day`,'%Y-%m-%d') `day`,cs.`hour`, cs.`date`
+        $sql = "SELECT cs.`id`, vu.`name`, vu.`lastname`, vu.`identify`, vu.`number`, vu.`email`, DATE_FORMAT(cs.`day`,'%Y-%m-%d') `day`,cs.`hour`, cs.`date`, cs.`type`
                 FROM {$this->table_change_seats} cs
                 INNER JOIN {$this->view_users} vu ON cs.user_id = vu.user_id
                 WHERE cs.`deleted` = 0 AND cs.`day` BETWEEN '{$start}' AND '{$end}'
