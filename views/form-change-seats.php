@@ -23,9 +23,7 @@
             <div class="container-type">
                 <label for="type">Tipo de reserva</label>
                 <select name="type" id="type" required>
-                    <option value="">Seleccionar</option>
                     <option value="presencial">Presencial</option>
-                    <option value="telefonica">Llamada telefónica</option>
                 </select>
             </div>
 

@@ -195,9 +195,6 @@ class Process{
 
         // Validate fields
         $this->validate_fields_change_seats($values);
-
-		error_log(print_r('Los valores',true));
-		error_log(print_r($values,true));
 		
         // save data
         $db = new Database();

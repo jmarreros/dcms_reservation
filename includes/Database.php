@@ -61,8 +61,6 @@ class Database{
                 WHERE `type`='{$type}' and qty > 0";
         $result = $this->wpdb->get_results( $sql );
 
-        error_log(print_r($result,true));
-
         $res = [];
         foreach ($result as $item){
             $res[] = $item->day;
