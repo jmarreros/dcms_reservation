@@ -1,286 +1,342 @@
 /*Calendar*/
 .cal-container {
-  padding-left: 10%;
-  padding-right: 10%;
-  margin-top: 20px;
-  margin-bottom: 20px;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .cal-container > .cal-sel-date {
-  display: none;
+    display: none;
 }
 
 .cal-sel-date {
-  width: 100%;
-  background: #f1f1f1;
+    width: 100%;
+    background: #f1f1f1;
 }
 
 .cal-calendar {
-  background-color: white;
+    background-color: white;
 }
 
 .cal-calendar.sel-date .tavo-calendar__week-names {
-  display: none;
+    display: none;
 }
 
 .cal-calendar.sel-date .tavo-calendar__day {
-  min-width: 0;
+    min-width: 0;
 }
 
 .cal-calendar.sel-date + .cal-sel-date {
-  display: block;
+    display: block;
 }
 
 .tavo-calendar__day-inner.current,
 .tavo-calendar__day-inner.current:hover {
-  background-color: transparent;
-  border: none;
-  color: black;
-  font-weight: bold;
+    background-color: transparent;
+    border: none;
+    color: black;
+    font-weight: bold;
 }
 
 .tavo-calendar__day_select.current {
-  background-color: #f1f1f1;
+    background-color: #f1f1f1;
 }
 
 .tavo-calendar__day_abs-today {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 .tavo-calendar__day span:hover {
-  background-color: transparent;
+    background-color: transparent;
 }
+
 .tavo-calendar__day_select span:hover,
 .tavo-calendar__day_select span {
-  background-color: white;
-  border: 2px solid #3e3e3e;
+    background-color: white;
+    border: 2px solid #3e3e3e;
 }
 
 .tavo-calendar__day_select.tavo-calendar__day_rel-past span,
 .tavo-calendar__day_select.tavo-calendar__day_rel-past span:hover {
-  border: 2px solid #ccc;
+    border: 2px solid #ccc;
 }
 
 .tavo-calendar__day_highlight {
-  color: #aaa !important;
+    color: #aaa !important;
 }
 
 .tavo-calendar__day {
-  cursor: auto;
-  padding-top: 4px;
-  padding-bottom: 4px;
+    cursor: auto;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 .tavo-calendar__day_select .tavo-calendar__day-inner {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .tavo-calendar__day span.tavo-calendar__day-inner {
-  width: 50px;
-  height: auto;
-  font-size: 16px;
+    width: 50px;
+    height: auto;
+    font-size: 16px;
 }
 
 .tavo-calendar__month-label,
 .tavo-calendar__weekday {
-  font-size: 15px;
+    font-size: 15px;
 }
 
 .cal-sel-date > div {
-  background-color: white;
-  width: 60%;
-  margin: auto;
-  margin-top: 16px;
-  margin-bottom: 16px;
-  box-shadow: 0 0 4px #ccc;
-  padding: 10px;
-  min-width: 260px;
+    background-color: white;
+    width: 60%;
+    margin: auto;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 0 4px #ccc;
+    padding: 10px;
+    min-width: 260px;
 }
 
 .cal-sel-date h4 {
-  margin: 0;
-  text-align: center;
-  font-size: 16px;
-  text-transform: uppercase;
+    margin: 0;
+    text-align: center;
+    font-size: 16px;
+    text-transform: uppercase;
 }
 
 .available-hours {
-  list-style: none;
-  max-width: 400px;
-  margin: auto;
-  padding: 0;
+    list-style: none;
+    max-width: 400px;
+    margin: auto;
+    padding: 0;
 }
 
 .available-hours li {
-  cursor: pointer;
-  border: 1px solid #ccc;
-  margin-top: 6px;
-  padding: 4px;
-  font-size: 16px;
-  line-height: 22px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    margin-top: 6px;
+    padding: 4px;
+    font-size: 16px;
+    line-height: 22px;
 }
 
 .available-hours li:hover {
-  background-color: #eee;
+    background-color: #eee;
 }
 
 .available-hours li.selected {
-  background-color: #eee;
-  font-weight: bold;
+    background-color: #eee;
+    font-weight: bold;
 }
 
 .available-hours li span {
-  pointer-events: none;
-  font-weight: normal;
-  font-size: 14px;
-  color: green;
-  display: block;
+    pointer-events: none;
+    font-weight: normal;
+    font-size: 14px;
+    color: green;
+    display: block;
 }
 
 .cal-sel-date .waiting {
-  display: none;
+    display: none;
 }
 
 .cal-sel-date .no-data {
-  padding: 20px;
-  font-size: 16px;
-  display: none;
+    padding: 20px;
+    font-size: 16px;
+    display: none;
 }
 
 .cal-sel-date .waiting .lds-ring {
-  transform: scale(1.5);
-  margin-top: 20px;
-  margin-bottom: 20px;
+    transform: scale(1.5);
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 /*Form new users*/
 .frm-change-seats,
 .frm-new-users {
-  max-width: 800px;
-  margin: auto;
-  margin-top: 20px;
+    max-width: 800px;
+    margin: auto;
+    margin-top: 20px;
 }
 
 .frm-change-seats .button,
 .frm-new-users .button {
-  cursor: pointer;
-  margin-top: 20px;
-  background-color: #bc2427;
-  padding: 10px 20px;
-  color: white;
-  border: none;
-  text-transform: uppercase;
-  border-radius: 4px;
-  font-size: 15px;
-  display: inline-block;
-  vertical-align: middle;
+    cursor: pointer;
+    margin-top: 20px;
+    background-color: #bc2427;
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    text-transform: uppercase;
+    border-radius: 4px;
+    font-size: 15px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .frm-change-seats .button:hover,
 .frm-new-users .button:hover {
-  background-color: #8d191f;
+    background-color: #8d191f;
 }
 
 .frm-change-seats label,
 .frm-new-users label {
-  margin-top: 12px;
-  font-weight: bold;
-  font-size: 14px;
-  display: inline-block;
+    margin-top: 12px;
+    font-weight: bold;
+    font-size: 14px;
+    display: inline-block;
 }
 
 .frm-change-seats label span,
 .frm-new-users label span {
-  color: darkred;
-  margin-left: 10px;
+    color: darkred;
+    margin-left: 10px;
 }
 
 .frm-change-seats .container-policy label,
 .frm-new-users .container-policy label {
-  font-weight: normal;
+    font-weight: normal;
 }
 
 .frm-change-seats .container-policy a,
 .frm-new-users .container-policy a {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .frm-change-seats .lbl-calendar,
 .frm-new-users .lbl-calendar {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 .frm-change-seats .cal-container,
 .frm-new-users .cal-container {
-  margin-top: 12px;
+    margin-top: 12px;
 }
 
 .frm-change-seats span.dashicons::before,
 .frm-new-users span.dashicons::before {
-  font-size: 16px;
-  vertical-align: middle;
-  color: gray;
+    font-size: 16px;
+    vertical-align: middle;
+    color: gray;
 }
 
 .frm-change-seats .container-policy input,
 .frm-new-users .container-policy input {
-  width: 20px;
-  height: 20px;
+    width: 20px;
+    height: 20px;
 }
 
 .frm-change-seats .message,
 .frm-new-users .message {
-  background-color: #ceeed8;
-  color: #005a1e;
-  border: 1px solid #005a1e;
-  font-size: 14px;
-  padding: 5px 10px;
-  border-radius: 4px;
-  margin-top: 20px;
-  margin-bottom: 10px;
+    background-color: #ceeed8;
+    color: #005a1e;
+    border: 1px solid #005a1e;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .frm-change-seats .message.error,
 .frm-new-users .message.error {
-  background-color: #fed5da;
-  color: #831c2c;
-  border-color: #831c2c;
+    background-color: #fed5da;
+    color: #831c2c;
+    border-color: #831c2c;
 }
 
 /*Spinner*/
 .lds-ring {
-  display: inline-block;
-  position: relative;
-  width: 12px;
-  height: 12px;
+    display: inline-block;
+    position: relative;
+    width: 12px;
+    height: 12px;
 }
+
 .lds-ring div {
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  margin: 3px;
-  margin-top: 0;
-  border: 3px solid gray;
-  border-radius: 50%;
-  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: gray transparent transparent transparent;
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    margin: 3px;
+    margin-top: 0;
+    border: 3px solid white;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: white transparent transparent transparent;
 }
+
 .lds-ring div:nth-child(1) {
-  animation-delay: -0.45s;
+    animation-delay: -0.45s;
 }
+
 .lds-ring div:nth-child(2) {
-  animation-delay: -0.3s;
+    animation-delay: -0.3s;
 }
+
 .lds-ring div:nth-child(3) {
-  animation-delay: -0.15s;
+    animation-delay: -0.15s;
 }
+
 @keyframes lds-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+.single-modules-sporting .frm-change-seats span.dashicons:before {
+    color: white;
+}
+
+.single-modules-sporting .frm-change-seats .cal-calendar .tavo-calendar__week-names > span,
+.single-modules-sporting .frm-change-seats .cal-calendar .tavo-calendar__days > span,
+.single-modules-sporting .frm-change-seats .cal-calendar .tavo-calendar__days > span > span {
+    color: #000 !important;
+}
+
+.single-modules-sporting .frm-change-seats .cal-calendar .tavo-calendar__header span {
+    color: white !important;
+}
+
+.single-modules-sporting .available-hours li{
+    color:grey;
+}
+
+.single-modules-sporting .container-type{
+    display: none;
+}
+
+.tavo-calendar__code_lock{
+    opacity:1;
+}
+
+.single-modules-sporting .tavo-calendar__header{
+    background:#8f0d0d;
+}
+
+.single-modules-sporting .frm-change-seats  .button{
+    padding: 15px 24px;
+    background:#8f0d0d;
+    border-radius: 20px;
+}
+
+.single-modules-sporting .frm-change-seats  .button:hover{
+    background:#a22929;
+}
+
+.single-modules-sporting .container-policy a:hover{
+    color:white;
+}
+
+.single-modules-sporting .message{
+    border-radius: 50px;
+    padding: 10px 20px;
 }

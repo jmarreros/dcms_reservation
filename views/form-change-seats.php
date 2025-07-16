@@ -24,7 +24,7 @@
                 <label for="type">Tipo de reserva</label>
                 <select name="type" id="type" required>
                     <option value="presencial">Presencial</option>
-                </select>
+                </select>x
             </div>
 
             <div class="container-policy">
